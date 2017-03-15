@@ -28,18 +28,25 @@
       <a class="hiddenanchor" id="signin"></a>
 
       <div class="login_wrapper">
-        <div class="animate form login_form">
-          <section class="login_content">
-            <form>
+        <div class="animate form login_form" >
+          <section class="login_content" >
+            <form >
               <h1><img src="images/logo.png" width="385" height="101"></h1>
-              <div>
-                <input type="text" class="form-control" placeholder="USUARIO" required />
+              <?php /* <div class="item form-group"> 
+               <div class="col-md-6 col-sm-6 col-xs-12">*/?>
+               <div>
+                <input type="text" class="form-control col-md-7 col-xs-12" placeholder="USUARIO" data-validate-words="1"  required />
               </div>
+              <?php /* </div> */?>
+              <?php /* <div class="item form-group"> 
+              <div class="col-md-6 col-sm-6 col-xs-12">*/?>
               <div>
-                <input type="password" class="form-control" placeholder="CONTRASEÑA" required />
+                <input type="password" class="form-control col-md-7 col-xs-12" placeholder="CONTRASEÑA" required />
               </div>
+              <?php /* </div> */?>
               <div>
-                <a class="btn btn-default submit" href="index.html">INICIAR  SESION</a>
+              <button id="send" type="submit" class="btn btn-success">INICIAR SESION</button>
+                <?php /* <a class="btn btn-default submit" href="index.html">INICIAR  SESION</a> */?>
                 <a class="reset_pass" href="#">¿OLVIDO SU CONTRASEÑA?</a>
               </div>
 
@@ -99,5 +106,18 @@
         </div> */?>
       </div>
     </div>
+        <!-- jQuery -->
+    <script src="./vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="./vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="./vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="./vendors/nprogress/nprogress.js"></script>
+    <!-- validator -->
+    <script src="./vendors/validator/validator.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="./build/js/custom.min.js"></script>
   </body>
 </html>
