@@ -39,7 +39,7 @@
                 <input type="password" class="form-control" placeholder="CONTRASEÑA" required />
               </div>
               <div>
-                <a class="btn btn-default submit" href="index.html">INICIAR SESION</a>
+                <a class="btn btn-default submit" href="index.html">INICIAR  SESION</a>
                 <a class="reset_pass" href="#">¿OLVIDO SU CONTRASEÑA?</a>
               </div>
 
