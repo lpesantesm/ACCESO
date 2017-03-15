@@ -1,5 +1,9 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
+<html lang="es">
+=======
 <html lang="en">
+>>>>>>> e8c3061be8556fd9ac0d55ed843679fe99e4f906
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!-- Meta, title, CSS, favicons, etc. -->
