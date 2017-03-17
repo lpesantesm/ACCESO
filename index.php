@@ -1,4 +1,45 @@
-<!DOCTYPE html>
+<?php 
+@session_start();
+$msgerror = '';
+$estadoform =  isset($_POST['frm_estado']) ? $_POST['frm_estado'] : '';
+//VALIDA QUE SE HAYA HECHO UN SUBMIT
+if ( !empty($estadoform) && $msgerror == '' ){
+    $ind = 0;
+	//CONVIERTE LOS DATOS ENVIADOS POR POST A VARIABLES
+	foreach ($_POST as $fn => $fv) {
+            if (substr($fn,3,1)== '_') {   //CAMPOS SIMPLES
+			   $asignacion = "\$" . substr($fn, 4) . "='" . $fv . "';";
+               eval($asignacion);
+			}
+	}
+	
+require_once('class/se/clsSe_Usuario.php');
+if ($msgerror == '') {
+	$ose_usuario = new Se_Usuario();
+	$ose_usuario->__set('idusuario', $idusuario);
+	$ose_usuario->__set('clave', md5($clave));
+	$ose_usuario->__set('ip', $_SERVER['REMOTE_ADDR']);
+    $reg = $ose_usuario->validaUsuario(); 
+	//print_r($reg);
+	if (is_array($reg)) {
+		if ($reg["sef_validasesionusuario"]== 't') {
+		   //$_SESSION[""
+		   header("Location: pages/principal.php"); 	
+        }else{
+			$msgerror = 'USUARIO/CONTRASEÑA INCORRECTA';
+			}
+		
+	} 
+	
+	//var_dump($reg);
+    /*if (!is_array($list_tipojustmasiva)) {
+        $msgError = $obj_Rh_Tablas->getMsjAlerta();
+        }*/
+}
+	
+}//FIN DE VALIDACION if ( !empty($estadoform) && $msgerror == '' ){
+echo $_SERVER["DOCUMENT_ROOT"];
+?><!DOCTYPE html>
 <html lang="es">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -30,23 +71,24 @@
       <div class="login_wrapper">
         <div class="animate form login_form" >
           <section class="login_content" >
-            <form >
+            <form method="post">
+              <input name="frm_estado" type="hidden" value="E">
               <h1><img src="images/logo.png" width="385" height="101"></h1>
               <?php /* <div class="item form-group"> 
                <div class="col-md-6 col-sm-6 col-xs-12">*/?>
                <div>
-                <input type="text" class="form-control col-md-7 col-xs-12" placeholder="USUARIO" data-validate-words="1"  required />
+                <input id="txt_idusuario" name="txt_idusuario" type="text" class="form-control col-md-7 col-xs-12" placeholder="USUARIO" data-validate-words="1" autocomplete="off"  required />
               </div>
               <?php /* </div> */?>
               <?php /* <div class="item form-group"> 
               <div class="col-md-6 col-sm-6 col-xs-12">*/?>
               <div>
-                <input type="password" class="form-control col-md-7 col-xs-12" placeholder="CONTRASEÑA" required />
+                <input  id="txt_clave" name="txt_clave" type="password" class="form-control col-md-7 col-xs-12" placeholder="CONTRASEÑA" required />
               </div>
               <?php /* </div> */?>
               <div>
               <button id="send" type="submit" class="btn btn-success">INICIAR SESION</button>
-                <?php /* <a class="btn btn-default submit" href="index.html">INICIAR  SESION</a> */?>
+                <?php echo $msgerror;/* <a class="btn btn-default submit" href="index.html">INICIAR  SESION</a> */?>
                 <a class="reset_pass" href="#">¿OLVIDO SU CONTRASEÑA?</a>
               </div>
 
