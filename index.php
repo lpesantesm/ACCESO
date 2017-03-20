@@ -23,8 +23,9 @@ if ($msgerror == '') {
 	//print_r($reg);
 	if (is_array($reg)) {
 		if ($reg["sef_validasesionusuario"]== 't') {
-		   //$_SESSION[""
-		   header("Location: pages/principal.php"); 	
+		   $_SESSION["nombreusuario"] = 'ROLANDO FLORES DE VALGAS';
+		   $_SESSION["idusuario"] = "1312266685";
+		   header("Location: pages/moduloprincipal.php"); 	
         }else{
 			$msgerror = 'USUARIO/CONTRASEÑA INCORRECTA';
 			}
