@@ -45,13 +45,13 @@
               <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">C&oacute;digo </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input type="text" id="first-name" required class="form-control col-md-7 col-xs-12">
+                  <input type="text" id="txt_idmodulo" name="txt_idmodulo" required class="form-control col-md-7 col-xs-12">
                 </div>
               </div>
               <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Descripci&oacute;n </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input type="text" id="last-name" name="last-name" required class="form-control col-md-7 col-xs-12">
+                  <input type="text" id="txt_descripcion" name="txt_descripcion" required class="form-control col-md-7 col-xs-12">
                 </div>
               </div>
               <div class="ln_solid"></div>
