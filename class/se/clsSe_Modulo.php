@@ -14,9 +14,7 @@ class Se_Modulo extends Dbmgr {
     private $orden = '';
     private $idmodulopadr = '';
     private $ip = '';
-    private $fecharegistro = null;
-    private $email = '';
-	
+    private $fecharegistro = null;	
 
 
     public function __construct()

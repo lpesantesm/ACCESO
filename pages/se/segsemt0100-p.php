@@ -14,7 +14,6 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/class/se/clsSe_Modulo.php');
 $ose_modulo = new Se_Modulo();
 $reg = $ose_modulo->getAllPagineo($idmodulo, $pagnum, $pagsize); 
 
-
 if (is_array($reg)){ ?>
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
@@ -40,8 +39,8 @@ if (is_array($reg)){ ?>
 
                         <?php foreach($reg as $key => $regdetalle) { ?>    
                           <tr class="even pointer">
-                            <td class=" "><?php echo $regdetalle["IDMODULO"]; ?></td>
-                            <td class=" "><?php echo $regdetalle["NOMBRE"]; ?></td>
+                            <td class=" "><?php echo $regdetalle["idmodulo"]; ?></td>
+                            <td class=" "><?php echo $regdetalle["nombre"]; ?></td>
                             <td class=" last"><a href="#">Ver</a>
                             </td>
                           </tr>
