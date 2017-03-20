@@ -53,7 +53,7 @@ class Se_Modulo extends Dbmgr {
         //$par .= sprintf(", '%s'", $this->ip);
         //$par .= sprintf(", '%s'", $this->idusuario);
         //$sql = sprintf("begin SE_PQ_Session.p_Inicia_Sesion(%s, true, :errcode, :errdesc); end;",$par);
-		echo $sql = sprintf("SELECT sef_modulosesionusuario(%s)",$par);
+		echo $sql = sprintf("SELECT * from sef_modulosesionusuario(%s)",$par);
 		$this-> QrySelect($sql);
         $reg = $this-> Result('a');
         return $reg;
