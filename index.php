@@ -39,7 +39,7 @@ if ($msgerror == '') {
 }
 	
 }//FIN DE VALIDACION if ( !empty($estadoform) && $msgerror == '' ){
-echo $_SERVER["DOCUMENT_ROOT"];
+//echo $_SERVER["DOCUMENT_ROOT"];
 ?><!DOCTYPE html>
 <html lang="es">
   <head>
