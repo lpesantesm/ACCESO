@@ -16,6 +16,7 @@ class Se_Modulo extends Dbmgr {
     private $ip = '';
     private $fecharegistro = null;
     private $email = '';
+	
 
 
     public function __construct()
@@ -47,13 +48,13 @@ class Se_Modulo extends Dbmgr {
   }
   
     // METODOS
-    public function validaModulousuario() {
-        $par = sprintf("'%s'", strtoupper($this->idusuario));
+    public function validaModulousuario($idusuario) {
+        $par = sprintf("'%s'", strtoupper($idusuario));
         //if (is_null($this->clave)){$par .= ", null";} else {$par .= sprintf(",  '%s'", md5($this->clave));}
         //$par .= sprintf(", '%s'", $this->ip);
         //$par .= sprintf(", '%s'", $this->idusuario);
         //$sql = sprintf("begin SE_PQ_Session.p_Inicia_Sesion(%s, true, :errcode, :errdesc); end;",$par);
-		echo $sql = sprintf("SELECT * from sef_modulosesionusuario(%s)",$par);
+		$sql = sprintf("SELECT * from sef_modulosesionusuario(%s)",$par);
 		$this-> QrySelect($sql);
         $reg = $this-> Result('a');
         return $reg;
