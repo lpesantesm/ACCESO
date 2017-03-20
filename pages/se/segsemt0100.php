@@ -366,7 +366,7 @@
                               <input type="checkbox" id="check-all" class="flat">
                             </th>-->
                             <th class="column-title">C&oacute; </th>
-                            <th class="column-title">Descripci&o&oacute;n </th>
+                            <th class="column-title">Descripci&oacute;n </th>
 <!--                            <th class="column-title">Order </th>
                             <th class="column-title">Bill to Name </th>
                             <th class="column-title">Status </th>
