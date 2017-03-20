@@ -13,8 +13,7 @@ foreach ($_POST as $fn => $fv) {
 require_once($_SERVER['DOCUMENT_ROOT'].'/class/se/clsSe_Modulo.php');
 $ose_modulo = new Se_Modulo();
 $reg = $ose_modulo->getAllPagineo($idmodulo, $pagnum, $pagsize); 
-
-if (is_array($reg)){ ?>
+if (is_array($reg) && isset($reg[0])){ ?>
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
