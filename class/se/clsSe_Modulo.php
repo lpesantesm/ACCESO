@@ -59,7 +59,17 @@ class Se_Modulo extends Dbmgr {
         $reg = $this-> Result('a');
         return $reg;
     } //validaUsuario()
-	
+
+    public function getAllPagineo($idmodulo, $pagnum, $pagsize){
+        $par =  (is_null($idmodulo) || $idmodulo == '' ? "null" : sprintf("%s", $idmodulo));
+        $par .=  (is_null($pagnum) || $pagnum == '' ? ", null" : sprintf(", %s", $pagnum));
+        $par .=  (is_null($pagsize) || $pagsize == '' ? ", null" : sprintf(", %s", $pagsize));        
+	$sql = sprintf("SELECT * from se_pq_modulo_fgetbrowserpag(%s)",$par);
+	$this->QrySelect($sql);
+        $reg = $this->Result('a');
+        return $reg;        
+   } // end getAllPagineo()  	
+
    /* public function get($idusuario) {
         $sql = sprintf("select SE_PQ_Usuario.f_get('%s') AS MFRC from dual ", $idusuario);
         $this->setSql($sql);
