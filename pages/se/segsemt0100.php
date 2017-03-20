@@ -77,6 +77,6 @@
           var f = document.frmC;
           if (f.btn_enviar.disabled == true) { return false;}
           f.hid_frmEstado.value = '1';
-          eval(formToCallPost(f,'segsemt0100-p.php','div_resultado',''));
+          eval(formToCallPost(f,'se/segsemt0100-p.php','div_resultado',''));
         } //--
     </script>
