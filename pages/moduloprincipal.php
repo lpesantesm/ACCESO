@@ -1,7 +1,25 @@
 <?php 
 @session_start(); 
-require_once($_SERVER['DOCUMENT_ROOT'].'/class/se/clsSe_Modulo.php');
+$idmodulo = isset($_GET["idmodulo"]) ? $_GET["idmodulo"] : NULL;
 $idusuario = $_SESSION["idusuario"];
+
+if (! is_null($idmodulo)) {
+	$_SESSION["modulo"] = $_GET["idmodulo"];
+	//CONSULTA MENU O TRANSACCIONES DE UN MODULO
+	require_once($_SERVER['DOCUMENT_ROOT'].'/class/se/clsSe_Transaccion.php');
+	$idusuario = $_SESSION["idusuario"];
+	$ose_transaccion = new Se_Transaccion();
+	$ose_transaccion->__set('idmodulo', $idmodulo);
+	$_SESSION["menuusuario"] = $ose_transaccion->consultaMenuusuario($idusuario); 
+	$directoriomodulo = isset($_GET["modulo"]) ? $_GET["modulo"] : NULL;
+	$_SESSION["directoriomodulo"] = $directoriomodulo;
+	//print_r($_SESSION["menuusuario"]);
+	//exit;
+	header("Location: principal.php");
+	}
+
+//CONSULTA LISTA DE MODULOS DE UN USUARIO QUE HA INICIADO SESION
+require_once($_SERVER['DOCUMENT_ROOT'].'/class/se/clsSe_Modulo.php');
 $ose_modulo = new Se_Modulo();
 //$ose_modulo->__set('idusuario', $idusuario);
 $reg = $ose_modulo->validaModulousuario($idusuario); 
@@ -25,6 +43,12 @@ $reg = $ose_modulo->validaModulousuario($idusuario);
     
     <!-- Custom styling plus plugins -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
+    <script language="javascript">
+    function seleccionModulo(idmodulo, modulo){
+		
+		window.location = 'moduloprincipal.php?idmodulo='+idmodulo+'&modulo='+modulo;
+		}
+    </script>
   </head>
 
   <body class="nav-md">
@@ -169,9 +193,9 @@ $reg = $ose_modulo->validaModulousuario($idusuario);
 						  foreach($reg as $key => $regdetalle) {
 						  //print_r($value);
 						  ?>
-                          <li style="margin-left:10px;border:solid 1px  #CCCCCC">
+                          <li style="margin-left:10px;border:solid 1px  #CCCCCC; cursor:pointer" onClick="javascript: seleccionModulo('<?php echo $regdetalle["ID"] ?>', '<?php echo $regdetalle["DIRECTORIO"] ?>');">
                             <span class="glyphicon glyphicon-lock" aria-hidden="false"></span>
-                            <span class="glyphicon-class"><?php echo $regdetalle["DESCRIPCION"]; ?></span>
+                            <span class="glyphicon-class"><a href="#"><?php echo $regdetalle["DESCRIPCION"]; ?></a></span>
                           </li>
                           <?php 
 						  }
