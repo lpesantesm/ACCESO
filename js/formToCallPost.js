@@ -16,7 +16,8 @@ function formToCallPost(f,sPagina,sDiv,sCodAdic) {
             //console.log(controles);
         }            
     }               
-  controles += "xxx_t: new Date().getTime() },\n function(respuesta) { \n $('#"+sDiv+"').html(respuesta); \n $.unblockUI(); \n"+sCodAdic +" });";    
+//  controles += "xxx_t: new Date().getTime() },\n function(respuesta) { \n $('#"+sDiv+"').html(respuesta); \n $.unblockUI(); \n"+sCodAdic +" });";    
+  controles += "xxx_t: new Date().getTime() },\n function(respuesta) { \n $('#"+sDiv+"').html(respuesta); \n"+sCodAdic +" });";      
   //alert(controles);
   console.log(controles);
     return controles;
