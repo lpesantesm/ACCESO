@@ -38,7 +38,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"> <span>GRUPO VITESEG S.A.</span></a>
+              <a href="principal." class="site_title"> <span>GRUPO VITESEG S.A.</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -49,8 +49,8 @@
                 <img src="images/img.jpg" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
-                <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <span>BIENVENIDO,</span>
+                <h2><?php echo $_SESSION["nombreusuario"];?> </h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -67,7 +67,7 @@
 				?>
                 </ul>
               </div>
-              <div class="menu_section">
+              <?php /* <div class="menu_section">
                 <h3>Live On</h3>
                 <ul class="nav side-menu">
                   <li><a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>
@@ -108,7 +108,7 @@
                   </li>                  
                   <li><a href="javascript:void(0)"><i class="fa fa-laptop"></i> Landing Page <span class="label label-success pull-right">Coming Soon</span></a></li>
                 </ul>
-              </div>
+              </div> */?>
 
             </div>
             <!-- /sidebar menu -->
@@ -143,27 +143,27 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="images/img.jpg" alt="">John Doe
+                    <?php /* <img src="images/img.jpg" alt=""> */?><?php echo $_SESSION["nombreusuario"];?> 
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
-                    <li><a href="javascript:;"> Profile</a></li>
-                    <li>
+                    <li><a href="javascript:;"> PERFIL</a></li>
+<?php /*                     <li>
                       <a href="javascript:;">
                         <span class="badge bg-red pull-right">50%</span>
                         <span>Settings</span>
                       </a>
-                    </li>
-                    <li><a href="javascript:;">Help</a></li>
-                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                    </li> */?>
+                    <li><a href="javascript:;">AYUDA</a></li>
+                    <li><a href="#"><i class="fa fa-sign-out pull-right"></i> CERRAR SESION</a></li>
                   </ul>
                 </li>
 
                 <li role="presentation" class="dropdown">
-                  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                  <?php /* <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                     <i class="fa fa-envelope-o"></i>
                     <span class="badge bg-green">6</span>
-                  </a>
+                  </a> */?>
                   <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                     <li>
                       <a>
@@ -238,8 +238,12 @@
           <div class="row"></div>
           <br />
 
-          <div class="row"><?php require_once($_SERVER["DOCUMENT_ROOT"]."/pages/".$_GET["pg"]);?></div>
-
+          <div class="row"><?php 
+		  if (isset($_GET["pg"]) && file_exists($_SERVER["DOCUMENT_ROOT"]."/pages/".$_GET["pg"])) {
+		      require_once($_SERVER["DOCUMENT_ROOT"]."/pages/".$_GET["pg"]);?></div>
+           <?php 
+		  }
+		   ?>            
 
           <div class="row"></div>
         </div>
