@@ -40,7 +40,8 @@
             <div class="clearfix"></div>
           </div>
           <div class="x_content"> <br />
-            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+            <form id="frmC" name="frmC" method="post" action="" data-parsley-validate class="form-horizontal form-label-left">
+              <input type="hidden" name="hid_frmEstado" id="hid_frmEstado" value="" /> 
               <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">C&oacute;digo </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
@@ -56,8 +57,7 @@
               <div class="ln_solid"></div>
               <div class="form-group">
                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                  <button class="btn btn-primary" type="button">Consultar</button>
-                  <!--						  <button class="btn btn-primary" type="reset">Reset</button>-->
+                  <button class="btn btn-primary" type="button" name="btn_enviar" id="btn_enviar" onclick="btn_EnviarOnClick();" title="Consultar registros que cumplan los criterios seleccionados">Consultar</button>                  <!--						  <button class="btn btn-primary" type="reset">Reset</button>-->
                   <button type="submit" class="btn btn-success">Agregar</button>
                 </div>
               </div>
@@ -67,49 +67,16 @@
       </div>
     </div>
     <div class="clearfix"></div>
-    <div class="col-md-12 col-sm-12 col-xs-12">
-      <div class="x_panel">
-        <div class="x_title">
-          <h2>Table design <small>Custom design</small></h2>
-          <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
-          <p>Add class <code>bulk_action</code> to table for bulk actions options on row select</p>
-          <div class="table-responsive">
-            <table class="table table-striped jambo_table bulk_action">
-              <thead>
-                <tr class="headings">
-                  <!--                            <th>
-                              <input type="checkbox" id="check-all" class="flat">
-                            </th>-->
-                  <th class="column-title">C&oacute; </th>
-                  <th class="column-title">Descripci&oacute;n </th>
-                  <!--                            <th class="column-title">Order </th>
-                            <th class="column-title">Bill to Name </th>
-                            <th class="column-title">Status </th>
-                            <th class="column-title">Amount </th>-->
-                  <th class="column-title no-link last"><span class="nobr">Action</span> </th>
-                  <th class="bulk-actions" colspan="7"> <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a> </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="even pointer">
-                  <!--                            <td class="a-center ">
-                              <input type="checkbox" class="flat" name="table_records">
-                            </td>-->
-                  <td class=" ">1</td>
-                  <td class=" ">Seguridad</td>
-                  <!--                            <td class=" ">121000210 <i class="success fa fa-long-arrow-up"></i></td>
-                            <td class=" ">John Blank L</td>
-                            <td class=" ">Paid</td>
-                            <td class="a-right a-right ">$7.45</td>-->
-                  <td class=" last"><a href="#">View</a></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div id="div_resultado">  
   </div>
 </div>
+</div>
+   <script type="text/javascript" src="../../js/formToCallPost.js"></script>   
+    <script language="javascript">
+        function btn_EnviarOnClick(){
+          var f = document.frmC;
+          if (f.btn_enviar.disabled == true) { return false;}
+          f.hid_frmEstado.value = '1';
+          eval(formToCallPost(f,'segsemt0100-p.php','div_resultado',''));
+        } //--
+    </script>
