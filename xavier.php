@@ -1,4 +1,0 @@
-<?php
-
-echo 'ESTE ES UN DOCUMENTO GENERADO POR XAVIER';
-?>
