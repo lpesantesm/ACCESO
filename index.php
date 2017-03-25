@@ -20,12 +20,16 @@ if ($msgerror == '') {
 	$ose_usuario->__set('clave', md5($clave));
 	$ose_usuario->__set('ip', $_SERVER['REMOTE_ADDR']);
     $reg = $ose_usuario->validaUsuario(); 
+	//var_dump($reg);
+	//var_dump($_SERVER);
+	//exit;
 	//print_r($reg);
 	if (is_array($reg)) {
-		if ($reg["sef_validasesionusuario"]== 't') {
-		   $_SESSION["nombreusuario"] = 'ROLANDO FLORES DE VALGAS';
-		   $_SESSION["idusuario"] = "1312266685";
-		   header("Location: pages/moduloprincipal.php"); 	
+		if ($reg["ov_respuesta"]== 'S') {
+			//$regusuario = $ose_usuario->getFullinfo(); 
+		    $_SESSION["nombreusuario"] = $regusuario[""];
+		    $_SESSION["idusuario"] = $regusuario["idusuario"];
+		    header("Location: pages/moduloprincipal.php"); 	
         }else{
 			$msgerror = 'USUARIO/CONTRASEÑA INCORRECTA';
 			}
@@ -41,126 +45,97 @@ if ($msgerror == '') {
 }//FIN DE VALIDACION if ( !empty($estadoform) && $msgerror == '' ){
 //echo $_SERVER["DOCUMENT_ROOT"];
 ?><!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AdminLTE 2 | Log in</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="../../plugins/iCheck/square/blue.css">
 
-    <title>GRUPO VITESEG S.A.</title>
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-logo">
+  <img src="images/logo.png" width="313" height="101">
+  </div>
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+    <p class="login-box-msg">INGRESE SUS DATOS PARA INICIAR SESION</p>
 
-    <!-- Bootstrap -->
-    <link href="./vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="./vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="./vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- Animate.css -->
-    <link href="./vendors/animate.css/animate.min.css" rel="stylesheet">
-
-    <!-- Custom Theme Style -->
-    <link href="./build/css/custom.min.css" rel="stylesheet">
-  </head>
-
-  <body class="login">
-    <div>
-      <a class="hiddenanchor" id="signup"></a>
-      <a class="hiddenanchor" id="signin"></a>
-
-      <div class="login_wrapper">
-        <div class="animate form login_form" >
-          <section class="login_content" >
-            <form method="post">
-              <input name="frm_estado" type="hidden" value="E">
-              <h1><img src="images/logo.png" width="385" height="101"></h1>
-              <?php /* <div class="item form-group"> 
-               <div class="col-md-6 col-sm-6 col-xs-12">*/?>
-               <div>
-                <input id="txt_idusuario" name="txt_idusuario" type="text" class="form-control col-md-7 col-xs-12" placeholder="USUARIO" data-validate-words="1" autocomplete="off"  required />
-              </div>
-              <?php /* </div> */?>
-              <?php /* <div class="item form-group"> 
-              <div class="col-md-6 col-sm-6 col-xs-12">*/?>
-              <div>
-                <input  id="txt_clave" name="txt_clave" type="password" class="form-control col-md-7 col-xs-12" placeholder="CONTRASEÑA" required />
-              </div>
-              <?php /* </div> */?>
-              <div>
-              <button id="send" type="submit" class="btn btn-success">INICIAR SESION</button>
-                <?php echo $msgerror;/* <a class="btn btn-default submit" href="index.html">INICIAR  SESION</a> */?>
-                <a class="reset_pass" href="#">¿OLVIDO SU CONTRASEÑA?</a>
-              </div>
-
-              <div class="clearfix"></div>
-
-              <div class="separator">
-                <p class="change_link"><?php /* New to site? 
-                  <a href="#signup" class="to_register"> Create Account </a>*/?>
-                </p>
-
-                <div class="clearfix"></div>
-                <br />
-
-                <div>
-                  <h1></h1>
-                  <p>©<?php echo date("Y");?> TODOS LOS DERECHOS RESERVADOS. <br />GRUPO VITESEG</p>
-                </div>
-              </div>
-            </form>
-          </section>
-        </div>
-
-        <?php /* <div id="register" class="animate form registration_form">
-          <section class="login_content">
-            <form>
-              <h1>Create Account</h1>
-              <div>
-                <input type="text" class="form-control" placeholder="Username" required />
-              </div>
-              <div>
-                <input type="email" class="form-control" placeholder="Email" required />
-              </div>
-              <div>
-                <input type="password" class="form-control" placeholder="Password" required />
-              </div>
-              <div>
-                <a class="btn btn-default submit" href="index.html">Submit</a>
-              </div>
-
-              <div class="clearfix"></div>
-
-              <div class="separator">
-                <p class="change_link">Already a member ?
-                  <a href="#signin" class="to_register"> Log in </a>
-                </p>
-
-                <div class="clearfix"></div>
-                <br />
-
-                <div>
-                  <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
-                  <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
-                </div>
-              </div>
-            </form>
-          </section>
-        </div> */?>
+    <form action="index.php" method="post" onSubmit="index.php">
+    <input name="frm_estado" type="hidden" value="E">
+      <div class="form-group has-feedback">
+        <input name="txt_idusuario" id="txt_idusuario" class="form-control" placeholder="USUARIO">
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
-    </div>
-        <!-- jQuery -->
-    <script src="./vendors/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="./vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- FastClick -->
-    <script src="./vendors/fastclick/lib/fastclick.js"></script>
-    <!-- NProgress -->
-    <script src="./vendors/nprogress/nprogress.js"></script>
-    <!-- validator -->
-    <script src="./vendors/validator/validator.js"></script>
+      <div class="form-group has-feedback">
+        <input type="password" name="txt_clave" id="txt_clave" class="form-control" placeholder="CONTRASEÑA" >
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="row">
+        <div class="col-xs-7">
+          <div class="checkbox icheck">
+            <label>
+              <input type="checkbox"> RECORDARME
+            </label>
+          </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-xs-5">
+          <button type="submit" class="btn btn-primary btn-block btn-flat">INICIAR SESION</button>
+        </div>
+        <!-- /.col -->
+      </div>
+    </form>
 
-    <!-- Custom Theme Scripts -->
-    <script src="./build/js/custom.min.js"></script>
-  </body>
+    <?php /* <div class="social-auth-links text-center">
+      <p>- OR -</p>
+      <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
+        Facebook</a>
+      <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
+        Google+</a>
+    </div> */?>
+    <!-- /.social-auth-links -->
+
+    <a href="#">OLVIDE MI CLAVE</a><br>
+    <?php /* <a href="register.html" class="text-center">Register a new membership</a> */?>
+
+  </div>
+  <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery 2.2.3 -->
+<script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<!-- iCheck -->
+<script src="../../plugins/iCheck/icheck.min.js"></script>
+<script>
+  $(function () {
+    $('input').iCheck({
+      checkboxClass: 'icheckbox_square-blue',
+      radioClass: 'iradio_square-blue',
+      increaseArea: '20%' // optional
+    });
+  });
+</script>
+</body>
 </html>
