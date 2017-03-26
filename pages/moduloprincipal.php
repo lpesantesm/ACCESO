@@ -1,5 +1,7 @@
 <?php 
 @session_start(); 
+require_once("../lib/validasesion.php");//VALIDA SESION 
+//print_r( $_SESSION);
 $idmodulo = isset($_GET["idmodulo"]) ? $_GET["idmodulo"] : NULL;
 $idusuario = $_SESSION["idusuario"];
 
@@ -23,12 +25,13 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/class/se/clsSe_Modulo.php');
 $ose_modulo = new Se_Modulo();
 //$ose_modulo->__set('idusuario', $idusuario);
 $reg = $ose_modulo->validaModulousuario($idusuario); 
+//print_r($reg);
 ?><!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Collapsed Sidebar Layout</title>
+  <title>GRUPO VITESEG S.A. | SELECCION DE MODULO DEL SISTEMA</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -49,6 +52,11 @@ $reg = $ose_modulo->validaModulousuario($idusuario);
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
+  <script language="javascript">
+    function seleccionModulo(idmodulo, modulo){
+		window.location = 'moduloprincipal.php?idmodulo='+idmodulo+'&modulo='+modulo;
+		}
+  </script>
 </head>
 <!-- ADD THE CLASS sidedar-collapse TO HIDE THE SIDEBAR PRIOR TO LOADING THE SITE -->
 <body class="hold-transition skin-blue sidebar-collapse sidebar-mini">
@@ -57,15 +65,15 @@ $reg = $ose_modulo->validaModulousuario($idusuario);
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="../index2.html" class="logo">
+    <a href="#" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
+      <span class="logo-mini"><b>G</b>V</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
+      <span class="logo-lg"><b>GRUPO</b> VITESEG</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
-      <!-- Sidebar toggle button-->
+       <!-- Sidebar toggle button-->
       <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
@@ -76,7 +84,7 @@ $reg = $ose_modulo->validaModulousuario($idusuario);
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
           <!-- Messages: style can be found in dropdown.less-->
-          <li class="dropdown messages-menu">
+          <?php /* <li class="dropdown messages-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-envelope-o"></i>
               <span class="label label-success">4</span>
@@ -156,12 +164,12 @@ $reg = $ose_modulo->validaModulousuario($idusuario);
                 <a href="#">View all tasks</a>
               </li>
             </ul>
-          </li>
+          </li> */?>
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Alexander Pierce</span>
+              <span class="hidden-xs"><?php echo $_SESSION["nombreusuario"];?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -169,12 +177,12 @@ $reg = $ose_modulo->validaModulousuario($idusuario);
                 <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
+                  <?php echo $_SESSION["nombreusuario"];?>
+                  <small><b>ULTIMA SESION: </b><?php echo $_SESSION["ultimasesion"];?></small>
                 </p>
               </li>
               <!-- Menu Body -->
-              <li class="user-body">
+              <?php /* <li class="user-body">
                 <div class="row">
                   <div class="col-xs-4 text-center">
                     <a href="#">Followers</a>
@@ -187,14 +195,14 @@ $reg = $ose_modulo->validaModulousuario($idusuario);
                   </div>
                 </div>
                 <!-- /.row -->
-              </li>
+              </li> */?>
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="#" class="btn btn-default btn-flat">PERFIL</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="./salir.php" class="btn btn-default btn-flat">CERRAR SESION</a>
                 </div>
               </li>
             </ul>
@@ -215,7 +223,7 @@ $reg = $ose_modulo->validaModulousuario($idusuario);
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       <!-- Sidebar user panel -->
-      <div class="user-panel">
+      <?php /* <div class="user-panel">
         <div class="pull-left image">
           <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
@@ -233,10 +241,10 @@ $reg = $ose_modulo->validaModulousuario($idusuario);
                 </button>
               </span>
         </div>
-      </form>
+      </form> */?>
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
-      <ul class="sidebar-menu">
+      <?php /* <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
         <li class="treeview">
           <a href="#">
@@ -407,7 +415,7 @@ $reg = $ose_modulo->validaModulousuario($idusuario);
         <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
         <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
         <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
-      </ul>
+      </ul> */?>
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -419,27 +427,53 @@ $reg = $ose_modulo->validaModulousuario($idusuario);
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Sidebar Collapsed
-        <small>Layout with collapsed sidebar on load</small>
+        MODULOS DEL SISTEMA
+        <small>LISTA DE MODULOS ASOCIADOS AL USUARIO</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Layout</a></li>
-        <li class="active">Collapsed Sidebar</li>
+        <?php /* <li><a href="#">Layout</a></li> */?>
+        <li class="active">MODULOS DEL SISTEMA</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
       <div class="callout callout-info">
-        <h4>Tip!</h4>
+       
+        <h4><i class="icon fa fa-info"></i> INFORMACION</h4>
 
-        <p>Add the sidebar-collapse class to the body tag to get this layout. You should combine this option with a
-          fixed layout if you have a long sidebar. Doing that will prevent your page content from getting stretched
-          vertically.</p>
+        <p>HA INICIADO SESION DE FORMA EXITOSA EN EL SISTEMA. POR FAVOR PROCEDA A SELECCIONAR UNO DE LOS MODULOS A LOS QUE SE LE HA DADO ACCESO PARA CONTINUAR CON SUS OPERACIONES.</p>
       </div>
+      
+       <div class="row">
+<?php 
+       $indice = 0;
+	   $colores = array("yellow", "green", "red", "blue", "aqua", "grey", "purple", "black");
+	   foreach($reg as $key => $regdetalle) {
+		       
+		       //print_r($value);
+	   ?>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-<?php echo $colores[$indice]; ?>"><i class="fa fa-lock"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text"><a href="javascript: seleccionModulo('<?php echo $regdetalle["ov_idmodulo"] ?>', '<?php echo $regdetalle["ov_directorio"] ?>');"><?php echo $regdetalle["ov_nombre"]; ?></a></span>
+              <span class="info-box-more"><?php echo $regdetalle["ov_descripcion"]; ?></span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <?php 
+		   $indice = ( $indice == count($colores) -1) ? 0 :  $indice+1;
+		  }
+		 ?>
+         </div>
       <!-- Default box -->
-      <div class="box">
+      <?php /* <div class="box">
         <div class="box-header with-border">
           <h3 class="box-title">Title</h3>
 
@@ -458,7 +492,7 @@ $reg = $ose_modulo->validaModulousuario($idusuario);
           Footer
         </div>
         <!-- /.box-footer-->
-      </div>
+      </div> */?>
       <!-- /.box -->
     </section>
     <!-- /.content -->
@@ -477,15 +511,15 @@ $reg = $ose_modulo->validaModulousuario($idusuario);
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Create the tabs -->
     <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-      <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-      <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+      <?php /*<li><a href="#control-sidebar-home-tab" data-toggle="tab"> <i class="fa fa-home"></i></a></li>  */?>
+      <?php /* <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li> */?>
     </ul>
     <!-- Tab panes -->
     <div class="tab-content">
       <!-- Home tab content -->
       <div class="tab-pane" id="control-sidebar-home-tab">
-        <h3 class="control-sidebar-heading">Recent Activity</h3>
-        <ul class="control-sidebar-menu">
+        <?php /*<h3 class="control-sidebar-heading">Recent Activity</h3>
+         <ul class="control-sidebar-menu">
           <li>
             <a href="javascript:void(0)">
               <i class="menu-icon fa fa-birthday-cake bg-red"></i>
@@ -530,10 +564,10 @@ $reg = $ose_modulo->validaModulousuario($idusuario);
               </div>
             </a>
           </li>
-        </ul>
+        </ul> */?>
         <!-- /.control-sidebar-menu -->
 
-        <h3 class="control-sidebar-heading">Tasks Progress</h3>
+        <?php /* <h3 class="control-sidebar-heading">Tasks Progress</h3>
         <ul class="control-sidebar-menu">
           <li>
             <a href="javascript:void(0)">
@@ -583,7 +617,7 @@ $reg = $ose_modulo->validaModulousuario($idusuario);
               </div>
             </a>
           </li>
-        </ul>
+        </ul> */?>
         <!-- /.control-sidebar-menu -->
 
       </div>
@@ -592,7 +626,7 @@ $reg = $ose_modulo->validaModulousuario($idusuario);
       <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
       <!-- /.tab-pane -->
       <!-- Settings tab content -->
-      <div class="tab-pane" id="control-sidebar-settings-tab">
+      <?php /* <div class="tab-pane" id="control-sidebar-settings-tab">
         <form method="post">
           <h3 class="control-sidebar-heading">General Settings</h3>
 
@@ -658,7 +692,7 @@ $reg = $ose_modulo->validaModulousuario($idusuario);
           </div>
           <!-- /.form-group -->
         </form>
-      </div>
+      </div> */?>
       <!-- /.tab-pane -->
     </div>
   </aside>

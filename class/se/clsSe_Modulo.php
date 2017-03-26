@@ -52,7 +52,7 @@ class Se_Modulo extends Dbmgr {
         //$par .= sprintf(", '%s'", $this->ip);
         //$par .= sprintf(", '%s'", $this->idusuario);
         //$sql = sprintf("begin SE_PQ_Session.p_Inicia_Sesion(%s, true, :errcode, :errdesc); end;",$par);
-		$sql = sprintf("SELECT * from sef_modulosesionusuario(%s)",$par);
+		$sql = sprintf("SELECT * from se_pq_usuario_fconsultamodulos(%s)",$par);
 		$this-> QrySelect($sql);
         $reg = $this-> Result('a');
         return $reg;
@@ -62,8 +62,8 @@ class Se_Modulo extends Dbmgr {
         $par =  (is_null($idmodulo) || $idmodulo == '' ? "null" : sprintf("%s", $idmodulo));
         $par .=  (is_null($pagnum) || $pagnum == '' ? ", null" : sprintf(", %s", $pagnum));
         $par .=  (is_null($pagsize) || $pagsize == '' ? ", null" : sprintf(", %s", $pagsize));        
-	$sql = sprintf("SELECT * from se_pq_modulo_fgetbrowserpag(%s)",$par);
-	$this->QrySelect($sql);
+	    $sql = sprintf("SELECT * from se_pq_modulo_fgetbrowserpag(%s)",$par);
+        $this->QrySelect($sql);
         $reg = $this->Result('a');
         return $reg;        
    } // end getAllPagineo()  	

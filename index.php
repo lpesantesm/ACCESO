@@ -27,8 +27,9 @@ if ($msgerror == '') {
 	if (is_array($reg)) {
 		if ($reg["ov_respuesta"]== 'S') {
 			//$regusuario = $ose_usuario->getFullinfo(); 
-		    $_SESSION["nombreusuario"] = $regusuario[""];
-		    $_SESSION["idusuario"] = $regusuario["idusuario"];
+		    $_SESSION["nombreusuario"] = $reg["ov_nombreusuario"];
+		    $_SESSION["idusuario"] = $ose_usuario->__get('idusuario');
+			$_SESSION["ultimasesion"] = $reg["ov_ultimasesion"];
 		    header("Location: pages/moduloprincipal.php"); 	
         }else{
 			$msgerror = 'USUARIO/CONTRASEÑA INCORRECTA';
@@ -49,19 +50,19 @@ if ($msgerror == '') {
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Log in</title>
+  <title>GRUPO VITESEG S.A. | INICIO DE SESION</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
-  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="./css/ionicons.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="css/AdminLTE.min.css">
+  <link rel="stylesheet" href="./css/AdminLTE.min.css">
   <!-- iCheck -->
-  <link rel="stylesheet" href="plugins/iCheck/square/blue.css">
+  <link rel="stylesheet" href="./plugins/iCheck/square/blue.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -89,8 +90,20 @@ if ($msgerror == '') {
         <input type="password" name="txt_clave" id="txt_clave" class="form-control" placeholder="CONTRASEÑA" >
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
+      <?php 
+  if (!empty($msgerror)) {
+  ?>
+  <div style="padding-top:10px;padding-left:20px;padding-right:20px">
+  <div class="alert alert-danger alert-dismissible" >
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-ban"></i> Alerta</h4>
+  <?php echo $msgerror; ?></div>
+  </div>
+  <?php 
+  }
+  ?>
       <div class="row">
-        <div class="col-xs-7">
+        <div class="col-xs-6">
           <div class="checkbox icheck">
             <label>
               <input type="checkbox"> RECORDARME
@@ -118,17 +131,15 @@ if ($msgerror == '') {
     <?php /* <a href="register.html" class="text-center">Register a new membership</a> */?>
 
   </div>
-  <!-- /.login-box-body -->
 </div>
-<!-- /.login-box -->
-
 <!-- jQuery 2.2.3 -->
-<script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="./plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
-<script src="js/bootstrap.min.js"></script>
+<script src="./js/bootstrap.min.js"></script>
 <!-- iCheck -->
-<script src="../../plugins/iCheck/icheck.min.js"></script>
+<script src="./plugins/iCheck/icheck.min.js"></script>
 <script>
+
   $(function () {
     $('input').iCheck({
       checkboxClass: 'icheckbox_square-blue',
@@ -136,6 +147,6 @@ if ($msgerror == '') {
       increaseArea: '20%' // optional
     });
   });
-</script>
+                </script>
 </body>
 </html>

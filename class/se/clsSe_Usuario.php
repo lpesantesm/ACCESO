@@ -61,7 +61,7 @@ class Se_Usuario extends Dbmgr {
         $par .= sprintf(", '%s'", $this->ip);
         //$par .= sprintf(", '%s'", $this->idusuario);
         //$sql = sprintf("begin SE_PQ_Session.p_Inicia_Sesion(%s, true, :errcode, :errdesc); end;",$par);
-		echo $sql = sprintf("SELECT * from se_pq_usuario_fvalidasesion(%s)",$par);
+		$sql = sprintf("SELECT * from se_pq_usuario_fvalidasesion(%s)",$par);
 		//$db = Dbmgr::instance();
 		$this-> QrySelect($sql);
         $reg = $this-> Result('f');
