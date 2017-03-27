@@ -105,7 +105,7 @@ if ($frmEstado == 1 || $frmEstado == 2){
       </script>-->
        <?php }
     }else{ echo 'No hay datos.'; } 
-//}
+}
 ?>
 
 
