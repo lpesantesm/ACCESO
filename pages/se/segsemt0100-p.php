@@ -62,7 +62,7 @@ if ($frmEstado == 1 || $frmEstado == 2){
         </tr>
         </tfoot>
       </table>     
-      <script>
+<!--      <script>
           $(function () {
             $('#tbl_data').DataTable({
               "paging": true,
@@ -102,7 +102,7 @@ if ($frmEstado == 1 || $frmEstado == 2){
               } ]                        
             });
           });      
-      </script>
+      </script>-->
        <?php }
     }else{ echo 'No hay datos.'; } 
 //}
