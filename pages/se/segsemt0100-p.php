@@ -32,7 +32,7 @@ if ($frmEstado == 1 || $frmEstado == 2){
     $ose_modulo = new Se_Modulo();
     $reg = $ose_modulo->getAllPagineo($idmodulo, $pagnum, $pagsize); 
     if (is_array($reg) && isset($reg[0])){
-        if($frmEstado == 1){?>
+        if($frmEstado == 1){ ?>
             <table id="tbl_data" class="table table-bordered table-hover">
               <thead>
               <tr>
@@ -42,7 +42,7 @@ if ($frmEstado == 1 || $frmEstado == 2){
               </tr>
               </thead>
               <tbody>
-        <?php} 
+        <?php } 
         if($frmEstado == 1 || $frmEstado == 2){
             foreach($reg as $key => $regdetalle){ ?>
             <tr>
@@ -52,7 +52,7 @@ if ($frmEstado == 1 || $frmEstado == 2){
               <td>Ver</td>
             </tr>                  
        <?php } }
-       if($frmEstado == 1){?>
+       if($frmEstado == 1){ ?>
         </tbody>
         <tfoot>
         <tr>
@@ -62,9 +62,50 @@ if ($frmEstado == 1 || $frmEstado == 2){
         </tr>
         </tfoot>
       </table>     
+        <script>
+          $(function () {
+            $('#tbl_data').DataTable({
+              "paging": true,
+              "lengthChange": false,
+              "searching": false,
+              "ordering": true,
+              "info": true,
+              "autoWidth": false,
+              "language": {
+                            "decimal":        "",
+                            "emptyTable":     "No data available in table",
+                            "info":           "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                            "infoEmpty":      "Mostrando 0 a 0 de 0 registros",
+                            "infoFiltered":   "(filtrando de _MAX_ total registros)",
+                            "infoPostFix":    "",
+                            "thousands":      ",",
+                            "lengthMenu":     "Mostrando _MENU_ registros",
+                            "loadingRecords": "Cargando...",
+                            "processing":     "Procesando...",
+                            "search":         "Buscando:",
+                            "zeroRecords":    "No existen registro que coincida con la busqueda",
+                            "paginate": {
+                                "first":      "Primero",
+                                "last":       "Ultimo",
+                                "next":       "Siguiente",
+                                "previous":   "Anterior"
+                            },
+                            "aria": {
+                                "sortAscending":  ": activate to sort column ascending",
+                                "sortDescending": ": activate to sort column descending"
+                            }
+                        },
+              // Disable sorting on the no-sort class
+              "aoColumnDefs" : [ {
+                "bSortable" : false,
+                "aTargets" : [ "no-sort" ]
+              } ]                        
+            });
+          });            
+        </script>
        <?php }
     }else{ echo 'No hay datos.'; } 
-//}
+}
 ?>
 
 
