@@ -61,7 +61,48 @@ if ($frmEstado == 1 || $frmEstado == 2){
           <th></th>
         </tr>
         </tfoot>
-      </table>           
+      </table>     
+      <script>
+          $(function () {
+            $('#tbl_data').DataTable({
+              "paging": true,
+              "lengthChange": false,
+              "searching": false,
+              "ordering": true,
+              "info": true,
+              "autoWidth": false,
+              "language": {
+                            "decimal":        "",
+                            "emptyTable":     "No data available in table",
+                            "info":           "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                            "infoEmpty":      "Mostrando 0 a 0 de 0 registros",
+                            "infoFiltered":   "(filtrando de _MAX_ total registros)",
+                            "infoPostFix":    "",
+                            "thousands":      ",",
+                            "lengthMenu":     "Mostrando _MENU_ registros",
+                            "loadingRecords": "Cargando...",
+                            "processing":     "Procesando...",
+                            "search":         "Buscando:",
+                            "zeroRecords":    "No existen registro que coincida con la busqueda",
+                            "paginate": {
+                                "first":      "Primero",
+                                "last":       "Ultimo",
+                                "next":       "Siguiente",
+                                "previous":   "Anterior"
+                            },
+                            "aria": {
+                                "sortAscending":  ": activate to sort column ascending",
+                                "sortDescending": ": activate to sort column descending"
+                            }
+                        },
+              // Disable sorting on the no-sort class
+              "aoColumnDefs" : [ {
+                "bSortable" : false,
+                "aTargets" : [ "no-sort" ]
+              } ]                        
+            });
+          });      
+      </script>
        <?php }
     }else{ echo 'No hay datos.'; } 
 //}
