@@ -96,7 +96,7 @@ require_once("../lib/validasesion.php");//VALIDA SESION
         <?php 
 		  $pagina = isset($_GET["pg"]) ?  $_GET["pg"] : '';
 		  $directoriomodulo =  isset($_SESSION["directoriomodulo"]) ?  $_SESSION["directoriomodulo"] : '';
-		  $enlacepagina = $_SERVER["DOCUMENT_ROOT"]."/pages/".$directoriomodulo.$_GET["pg"];
+		  echo $enlacepagina = $_SERVER["DOCUMENT_ROOT"]."/pages/".$directoriomodulo.'/'.$pagina;
 		  if (!empty($pagina) && file_exists($enlacepagina)) {
 		      require_once($enlacepagina);
 		  }		
