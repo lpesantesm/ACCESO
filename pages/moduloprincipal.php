@@ -2,29 +2,70 @@
 @session_start(); 
 require_once("../lib/validasesion.php");//VALIDA SESION 
 //print_r( $_SESSION);
-$idmodulo = isset($_GET["idmodulo"]) ? $_GET["idmodulo"] : NULL;
+//VARIABLES
+$idmodulo = NULL;
 $idusuario = $_SESSION["idusuario"];
+$res = NULL;
+$titulopagina = NULL;
+$despagina = NULL;
 
-if (! is_null($idmodulo)) {
-	$_SESSION["modulo"] = $_GET["idmodulo"];
-	//CONSULTA MENU O TRANSACCIONES DE UN MODULO
-	require_once($_SERVER['DOCUMENT_ROOT'].'/class/se/clsSe_Transaccion.php');
-	$idusuario = $_SESSION["idusuario"];
-	$ose_transaccion = new Se_Transaccion();
-	$ose_transaccion->__set('idmodulo', $idmodulo);
-	$_SESSION["menuusuario"] = $ose_transaccion->consultaMenuusuario($idusuario); 
-	$directoriomodulo = isset($_GET["modulo"]) ? $_GET["modulo"] : NULL;
-	$_SESSION["directoriomodulo"] = $directoriomodulo;
-	//print_r($_SESSION["menuusuario"]);
-	//exit;
-	header("Location: principal.php");
-	}
+//VERIFICA ENVIO DE PARAMETROS
+$id = isset($_GET["id"]) ? $_GET["id"] : NULL;
+if (!empty($id)) {
+	list($idmodulo, $nombremodulo, $directoriomodulo) = explode('$', $id);
+}
 
-//CONSULTA LISTA DE MODULOS DE UN USUARIO QUE HA INICIADO SESION
+
+//////////////////////////////////////////////////////////////////////
+//INVOCA CLASE DE MODULO
 require_once($_SERVER['DOCUMENT_ROOT'].'/class/se/clsSe_Modulo.php');
 $ose_modulo = new Se_Modulo();
-//$ose_modulo->__set('idusuario', $idusuario);
-$reg = $ose_modulo->validaModulousuario($idusuario); 
+
+if (!is_null($idmodulo) && !empty($idmodulo)) {
+
+    //VERIFICA SI EL MODULO SELECCIONADO POSEE SUBMODULOS
+	if (!empty($idmodulo)) {
+	   
+		$ose_modulo -> __set("idmodulo", $idmodulo);
+		$res = $ose_modulo ->validaModulousuario($idusuario);
+		var_dump($res);
+	}
+	
+	//VERIFICA SUBMODULOS DEL MODULO SELECCIONADO
+	if (count($res) > 0) {
+		$reg = $res;
+		$titulopagina = 'SUBMODULOS DE <b>'.$nombremodulo.'</b>';
+		$despagina = 'LISTA DE SUBMODULOS ASOCIADOS AL USUARIO';
+	}else{
+	
+		$_SESSION["idmodulo"] = $idmodulo; //$_GET["idmodulo"];
+		$_SESSION["nombremodulo"] = $nombremodulo;
+		$_SESSION["directoriomodulo"] = $directoriomodulo;
+		
+		//$_SESSION["nombresubmodulo"] = $nombremodulo;
+		//CONSULTA MENU O TRANSACCIONES DE UN MODULO
+		require_once($_SERVER['DOCUMENT_ROOT'].'/class/se/clsSe_Transaccion.php');
+		//$idusuario = $_SESSION["idusuario"];
+		$ose_transaccion = new Se_Transaccion();
+		$ose_transaccion->__set('idmodulo', $idmodulo);
+		$_SESSION["menuusuario"] = $ose_transaccion->consultaMenuusuario($idusuario); 
+		
+		//print_r($_SESSION);
+		header("Location: principal.php");
+		exit;
+	
+	}
+	}else{
+		//CONSULTA LISTA DE MODULOS DE UN USUARIO QUE HA INICIADO SESION
+		//$ose_modulo->__set('idusuario', $idusuario);
+		$ose_modulo->__set('idmodulo', $idmodulo);
+		$reg = $ose_modulo->validaModulousuario($idusuario); 
+		$titulopagina = 'MODULOS DEL SISTEMA';
+		$despagina = 'LISTA DE MODULOS ASOCIADOS AL USUARIO';
+		}
+
+
+
 //print_r($reg);
 ?><!DOCTYPE html>
 <html>
@@ -53,8 +94,9 @@ $reg = $ose_modulo->validaModulousuario($idusuario);
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
   <script language="javascript">
-    function seleccionModulo(idmodulo, modulo){
-		window.location = 'moduloprincipal.php?idmodulo='+idmodulo+'&modulo='+modulo;
+    function seleccionModulo(id){
+		//window.location = 'moduloprincipal.php?idmodulo='+idmodulo+'&modulo='+modulo;
+		window.location = 'moduloprincipal.php?id='+id;
 		}
   </script>
 </head>
@@ -80,139 +122,9 @@ $reg = $ose_modulo->validaModulousuario($idusuario);
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-
-      <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
-          <!-- Messages: style can be found in dropdown.less-->
-          <?php /* <li class="dropdown messages-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-envelope-o"></i>
-              <span class="label label-success">4</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">You have 4 messages</li>
-              <li>
-                <!-- inner menu: contains the actual data -->
-                <ul class="menu">
-                  <li><!-- start message -->
-                    <a href="#">
-                      <div class="pull-left">
-                        <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <h4>
-                        Support Team
-                        <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                      </h4>
-                      <p>Why not buy a new awesome theme?</p>
-                    </a>
-                  </li>
-                  <!-- end message -->
-                </ul>
-              </li>
-              <li class="footer"><a href="#">See All Messages</a></li>
-            </ul>
-          </li>
-          <!-- Notifications: style can be found in dropdown.less -->
-          <li class="dropdown notifications-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-bell-o"></i>
-              <span class="label label-warning">10</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">You have 10 notifications</li>
-              <li>
-                <!-- inner menu: contains the actual data -->
-                <ul class="menu">
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="footer"><a href="#">View all</a></li>
-            </ul>
-          </li>
-          <!-- Tasks: style can be found in dropdown.less -->
-          <li class="dropdown tasks-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-flag-o"></i>
-              <span class="label label-danger">9</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">You have 9 tasks</li>
-              <li>
-                <!-- inner menu: contains the actual data -->
-                <ul class="menu">
-                  <li><!-- Task item -->
-                    <a href="#">
-                      <h3>
-                        Design some buttons
-                        <small class="pull-right">20%</small>
-                      </h3>
-                      <div class="progress xs">
-                        <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                          <span class="sr-only">20% Complete</span>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <!-- end task item -->
-                </ul>
-              </li>
-              <li class="footer">
-                <a href="#">View all tasks</a>
-              </li>
-            </ul>
-          </li> */?>
           <!-- User Account: style can be found in dropdown.less -->
-          <li class="dropdown user user-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs"><?php echo $_SESSION["nombreusuario"];?></span>
-            </a>
-            <ul class="dropdown-menu">
-              <!-- User image -->
-              <li class="user-header">
-                <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
-                <p>
-                  <?php echo $_SESSION["nombreusuario"];?>
-                  <small><b>ULTIMA SESION: </b><?php echo $_SESSION["ultimasesion"];?></small>
-                </p>
-              </li>
-              <!-- Menu Body -->
-              <?php /* <li class="user-body">
-                <div class="row">
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Followers</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Sales</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Friends</a>
-                  </div>
-                </div>
-                <!-- /.row -->
-              </li> */?>
-              <!-- Menu Footer-->
-              <li class="user-footer">
-                <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">PERFIL</a>
-                </div>
-                <div class="pull-right">
-                  <a href="./salir.php" class="btn btn-default btn-flat">CERRAR SESION</a>
-                </div>
-              </li>
-            </ul>
-          </li>
-          <!-- Control Sidebar Toggle Button -->
-          <li>
-            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-          </li>
-        </ul>
-      </div>
+          <?php $paginainfo = "infoprincipal.php";
+		  require_once($paginainfo ); ?>
     </nav>
   </header>
 
@@ -427,13 +339,13 @@ $reg = $ose_modulo->validaModulousuario($idusuario);
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        MODULOS DEL SISTEMA
-        <small>LISTA DE MODULOS ASOCIADOS AL USUARIO</small>
+        <?php echo $titulopagina; ?>
+        <small><?php echo $despagina; ?></small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="./moduloprincipal.php"><i class="fa fa-cube"></i> MENU DE MODULOS</a></li>
         <?php /* <li><a href="#">Layout</a></li> */?>
-        <li class="active">MODULOS DEL SISTEMA</li>
+        <?php if ( !empty($idmodulo) ) {?><li class="active"><?php echo $titulopagina; ?></li><?php }?>
       </ol>
     </section>
 
@@ -443,7 +355,7 @@ $reg = $ose_modulo->validaModulousuario($idusuario);
        
         <h4><i class="icon fa fa-info"></i> INFORMACION</h4>
 
-        <p>HA INICIADO SESION DE FORMA EXITOSA EN EL SISTEMA. POR FAVOR PROCEDA A SELECCIONAR UNO DE LOS MODULOS A LOS QUE SE LE HA DADO ACCESO PARA CONTINUAR CON SUS OPERACIONES.</p>
+        <p>HA INICIADO SESION DE FORMA EXITOSA EN EL SISTEMA. POR FAVOR PROCEDA A SELECCIONAR UNO DE LOS MODULOS A LOS QUE SE LE HA CONCEDIDO ACCESO PARA CONTINUAR CON SUS OPERACIONES.</p>
       </div>
       
        <div class="row">
@@ -459,7 +371,7 @@ $reg = $ose_modulo->validaModulousuario($idusuario);
             <span class="info-box-icon bg-<?php echo $colores[$indice]; ?>"><i class="fa fa-lock"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text"><a href="javascript: seleccionModulo('<?php echo $regdetalle["ov_idmodulo"] ?>', '<?php echo $regdetalle["ov_directorio"] ?>');"><?php echo $regdetalle["ov_nombre"]; ?></a></span>
+              <span class="info-box-text"><a href="javascript: seleccionModulo('<?php echo $regdetalle["ov_idmodulo"] ?>$<?php echo $regdetalle["ov_nombre"] ?>$<?php echo $regdetalle["ov_directorio"] ?>');"><?php echo $regdetalle["ov_nombre"]; ?></a></span>
               <span class="info-box-more"><?php echo $regdetalle["ov_descripcion"]; ?></span>
             </div>
             <!-- /.info-box-content -->

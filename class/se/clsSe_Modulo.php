@@ -50,7 +50,7 @@ class Se_Modulo extends Dbmgr {
         $par = sprintf("'%s'", strtoupper($idusuario));
         //if (is_null($this->clave)){$par .= ", null";} else {$par .= sprintf(",  '%s'", md5($this->clave));}
         //$par .= sprintf(", '%s'", $this->ip);
-        //$par .= sprintf(", '%s'", $this->idusuario);
+        $par .= sprintf(", %d", $this->idmodulo);
         //$sql = sprintf("begin SE_PQ_Session.p_Inicia_Sesion(%s, true, :errcode, :errdesc); end;",$par);
 		$sql = sprintf("SELECT * from se_pq_usuario_fconsultamodulos(%s)",$par);
 		$this-> QrySelect($sql);
@@ -68,6 +68,13 @@ class Se_Modulo extends Dbmgr {
         return $reg;        
    } // end getAllPagineo()  	
 
+    public function consultaSubmodulos() {
+        $par = sprintf("%s", strtoupper($idmodulo));
+		$sql = sprintf("SELECT * from se_pq_usuario_fconsultamodulos(%s)",$par);
+		$this-> QrySelect($sql);
+        $reg = $this-> Result('a');
+        return $reg;
+    } //validaUsuario()
    /* public function get($idusuario) {
         $sql = sprintf("select SE_PQ_Usuario.f_get('%s') AS MFRC from dual ", $idusuario);
         $this->setSql($sql);

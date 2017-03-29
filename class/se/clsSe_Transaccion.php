@@ -56,7 +56,7 @@ class Se_Transaccion extends Dbmgr {
         $par .= sprintf(", '%s'", $this->idmodulo);
         //$par .= sprintf(", '%s'", $this->idusuario);
         //$sql = sprintf("begin SE_PQ_Session.p_Inicia_Sesion(%s, true, :errcode, :errdesc); end;",$par);
-		echo $sql = sprintf("SELECT * from sef_transaccionsesionusuario(%s)",$par);
+		echo $sql = sprintf("SELECT * from se_pq_usuario_fconsultatransacciones(%s)",$par);
 		$this-> QrySelect($sql);
         $reg = $this-> Result('a');
         return $reg;
