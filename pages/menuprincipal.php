@@ -17,7 +17,7 @@
   </a><ul class="treeview-menu">');
 		 }else{
 			if ($regdetalle["ov_tipo"]=='S') { //TIPO SUBMENU
-                $linksubmenu = !empty($regdetalle["ov_pagina"]) ? 'principal.php?pg='.$regdetalle["ov_pagina"] : '';
+                $linksubmenu = !empty($regdetalle["ov_pagina"]) ? './principal.php?pg='.$regdetalle["ov_pagina"] : '';
 				print('<li>
 						  <a href="'.$linksubmenu.'" ><i class="fa fa-dot-circle-o text-red"></i> 
 						  <span title="'.$regdetalle["ov_descripcion"].'">'.$regdetalle["ov_nombre"].'</span>
@@ -25,8 +25,8 @@
 							  <i class="fa fa-angle-left pull-right"></i>
 							</span>
 						  </a>
-						  <ul class="treeview-menu">
-						  ');		
+						  
+						  ');		//<ul class="treeview-menu">
 			}else{
 				 
 				 if ($regdetalle["ov_tipo"]=='O') { //TIPO OPCION
@@ -47,10 +47,10 @@
 		
 							//*******************************************
 					//PREGUNTA SI ES LA ULTIMA OPCION DEL SUBMENU 
-					if(isset($_SESSION["menuusuario"][$key+1]["ov_tipo"]) && 
+					/* if(isset($_SESSION["menuusuario"][$key+1]["ov_tipo"]) && 
 					        ($_SESSION["menuusuario"][$key+1]["ov_tipo"] != 'O') ) {
 							print('</ul>');
-							}
+							} */
 					//*******************************************
 							       
 					 }

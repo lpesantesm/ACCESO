@@ -32,6 +32,8 @@ require_once("../lib/validasesion.php");//VALIDA SESION
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
+<!-- jQuery 2.2.3 -->
+<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -78,9 +80,7 @@ require_once("../lib/validasesion.php");//VALIDA SESION
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) --><!-- Main content -->
-    <section class="content">
-      <div class="row">
-        
+    <section class="content">        
         <?php 
 		  $pagina = isset($_GET["pg"]) ?  $_GET["pg"] : '';
 		  $directoriomodulo =  isset($_SESSION["directoriomodulo"]) ?  strtolower($_SESSION["directoriomodulo"]) : '';
@@ -89,9 +89,6 @@ require_once("../lib/validasesion.php");//VALIDA SESION
 		      require_once($enlacepagina);
 		  }		
 		//print_r($_SESSION);?>
-       
-        <!-- /.col --><!-- /.col -->
-      </div>
     </section>
     <!-- /.content -->
   </div>
@@ -116,8 +113,7 @@ require_once("../lib/validasesion.php");//VALIDA SESION
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery 2.2.3 -->
-<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+
 <!-- Bootstrap 3.3.6 -->
 <script src="../js/bootstrap.min.js"></script>
 <!-- Slimscroll -->
