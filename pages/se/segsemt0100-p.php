@@ -36,9 +36,10 @@ if ($frmEstado == 1 || $frmEstado == 2){
             <table id="tbl_data" class="table table-bordered table-hover">
               <thead>
               <tr>
-                <th>C&oacute;digo</th>
-                <th>Descripci&oacute;n</th>
-                <th class="no-sort">Acci&oacute;n</th>
+                <th>CODIGO</th>
+                <th>NOMBRE</th>
+                <th>MODULO PADRE</th>
+                <th class="no-sort">ACCION</th>
               </tr>
               </thead>
               <tbody>
@@ -48,6 +49,7 @@ if ($frmEstado == 1 || $frmEstado == 2){
             <tr>
               <td><?php echo $regdetalle["idmodulo"]; ?></td>
               <td><?php echo $regdetalle["nombre"]; ?>
+              <td><?php echo $regdetalle["nombrepadre"]; ?>
               </td>
               <td>Ver</td>
             </tr>                  
