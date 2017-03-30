@@ -368,7 +368,7 @@ if (!is_null($idmodulo) && !empty($idmodulo)) {
 	   ?>
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-<?php echo $colores[$indice]; ?>"><i class="fa fa-lock"></i></span>
+            <span class="info-box-icon bg-<?php echo $colores[$indice]; ?>"><i class="fa fa-<?php echo $regdetalle["ov_icono"] ?>"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text"><a href="javascript: seleccionModulo('<?php echo $regdetalle["ov_idmodulo"] ?>$<?php echo $regdetalle["ov_nombre"] ?>$<?php echo $regdetalle["ov_directorio"] ?>');"><?php echo $regdetalle["ov_nombre"]; ?></a></span>
