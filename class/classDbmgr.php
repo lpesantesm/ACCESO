@@ -87,7 +87,7 @@ class Dbmgr extends Conexion
 		return $this->QryId; 
 	}
 	
-	function Result($cond="a")
+	function Result($cond="a", $type = PGSQL_ASSOC)
 	{
 		$result = "";
 		//echo 'cond ==> ' . $cond . '<br/>';
@@ -103,7 +103,7 @@ class Dbmgr extends Conexion
 			
 
 			//while ($row = @mysql_fetch_array($this->QryId, MYSQL_BOTH))
-			while ($row = @pg_fetch_array($this->QryId, null, PGSQL_ASSOC))
+			while ($row = @pg_fetch_array($this->QryId, null, $type))
 			{
 				$result->addItem($row);
 			}

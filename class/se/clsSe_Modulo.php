@@ -1,5 +1,5 @@
 <?php  
-//archivo: clsSe_Modulo.php
+// archivo: clsSe_Modulo.php
 // Codigo Autogenerado 16-NOV-10 05.51.04.358301 PM -05:00
 require_once strtolower($_SERVER["DOCUMENT_ROOT"]).'/class/classDbmgr.php';
 
@@ -58,13 +58,14 @@ class Se_Modulo extends Dbmgr {
         return $reg;
     } //validaUsuario()
 
-    public function getAllPagineo($idmodulo, $pagnum, $pagsize){
-        $par =  (is_null($idmodulo) || $idmodulo == '' ? "null" : sprintf("%s", $idmodulo));
-        $par .=  (is_null($pagnum) || $pagnum == '' ? ", null" : sprintf(", %s", $pagnum));
-        $par .=  (is_null($pagsize) || $pagsize == '' ? ", null" : sprintf(", %s", $pagsize));        
+    public function getAllPagineo( $pagnum, $pagsize){
+        $par =  (is_null($this->idmodulo) || $this->idmodulo == '' || !is_numeric( $this->idmodulo ) ? "null" : sprintf("%d", $this->idmodulo));
+        $par .= (is_null($this->nombre) || $this->nombre == '' ? ", null" : sprintf(", '%s'", $this->nombre));
+		$par .= (is_null($pagnum) || $pagnum == '' ? ", null" : sprintf(", %s", $pagnum));
+        $par .= (is_null($pagsize) || $pagsize == '' ? ", null" : sprintf(", %s", $pagsize));        
 	    $sql = sprintf("SELECT * from se_pq_modulo_fgetbrowserpag(%s)",$par);
         $this->QrySelect($sql);
-        $reg = $this->Result('a');
+        $reg = $this->Result('a', PGSQL_NUM);
         return $reg;        
    } // end getAllPagineo()  	
 

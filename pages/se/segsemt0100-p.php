@@ -1,117 +1,51 @@
-<?php
-session_start();
+<?php 
+//***************************************************************************
+//      FECHA: 30/03/2017
+//      AUTOR: ROLANDO FLORES DE VALGAS
+//  PROPOSITO: PAGINA DE CONSULTA DE REGISTROS A DE LA TABLA DE RESUMEN DE
+//             MODULO
+//    ARCHIVO: .php
+//***************************************************************************
 
-$msgError = '';
+//DECLARACION DE VARIABLES
+$object = NULL;
+$resultado = '';
+$totalregistros = 0;
+$registrosfiltrados = 0;
 
-$pagnum = 1;
-$pagsize = 10;//$_SESSION['pageSize'];
-$pageTotal = 0;
-$primeraVez = true;
+//CONSULTA PARAMETROS ENVIADOS PARA BUSQUEDA DE REGISTROS
+$draw = isset($_GET["draw"]) ? $_GET["draw"] : 1; //NUMERO DE CONSULTA
+$start = isset($_GET["start"]) ? $_GET["start"] : 0; //INDICE DESDE DONDE SE INICIA A CONSULTAR LOS REGISTROS
+$pagsize = isset($_GET["pagsize"]) ? $_GET["pagsize"] : 10; //NUMERO DE REGISTROS MAXIMOS POR CONSULTA
+$pagnum = ($start + $pagsize) / $pagsize; //CALCULA EL NUMERO DE LA PAGINA QUE DEBO ENVIAR A CONSULTAR
+$busqueda = isset($_GET["search"]["value"]) ? $_GET["search"]["value"] : NULL;
 
-//// primera vez
-//if ($primeraVez){
-//    // inicializo campos
-//    $frmEstado = 1;
-//    $postAnterior['hid_frmEstado'] = $frmEstado;
-//    $postAnterior['txt_codigo'] = $codigo;
-//    $postAnterior['txt_descripcion'] = $descripcion;
-//    //unset($_SESSION['pag']);
-//} else {
-    // obtiene todos los campos del request POST
-    //print_r($_POST);
-    foreach (/*$postAnterior*/$_POST as $nombre_campo => $valor) {
-        $asignacion = "\$" . substr($nombre_campo, 4) . "='" . $valor . "';";
-		//echo "$asignacion";        
-        eval($asignacion);
-    } // for
-//} //($primeraVez)
+//PARAMETROS ADICIONALES
+$idmodulo = isset($_GET["idmodulo"]) ? $_GET["idmodulo"] : NULL;
 
-//consulta de registro
-if ($frmEstado == 1 || $frmEstado == 2){
-    require_once($_SERVER['DOCUMENT_ROOT'].'/class/se/clsSe_Modulo.php');
-    $ose_modulo = new Se_Modulo();
-    $reg = $ose_modulo->getAllPagineo($idmodulo, $pagnum, $pagsize); 
-    if (is_array($reg) && isset($reg[0])){
-        if($frmEstado == 1){ ?>
-            <table id="tbl_data" class="table table-bordered table-hover">
-              <thead>
-              <tr>
-                <th>CODIGO</th>
-                <th>NOMBRE</th>
-                <th>MODULO PADRE</th>
-                <th class="no-sort">ACCION</th>
-              </tr>
-              </thead>
-              <tbody>
-        <?php } 
-        if($frmEstado == 1 || $frmEstado == 2){
-            foreach($reg as $key => $regdetalle){ ?>
-            <tr>
-              <td><?php echo $regdetalle["idmodulo"]; ?></td>
-              <td><?php echo $regdetalle["nombre"]; ?>
-              <td><?php echo $regdetalle["nombrepadre"]; ?>
-              </td>
-              <td>Ver</td>
-            </tr>                  
-       <?php } }
-       if($frmEstado == 1){ ?>
-        </tbody>
-        <tfoot>
-        <tr>
-          <th>C&oacute;digo</th>
-          <th>Descripci&oacute;n</th>
-          <th></th>
-        </tr>
-        </tfoot>
-      </table>     
-        <script>
-          $(function () {
-            $('#tbl_data').DataTable({
-              "paging": true,
-              "lengthChange": false,
-              "searching": false,
-              "ordering": true,
-              "info": true,
-              "autoWidth": false,
-              "language": {
-                            "decimal":        "",
-                            "emptyTable":     "No data available in table",
-                            "info":           "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                            "infoEmpty":      "Mostrando 0 a 0 de 0 registros",
-                            "infoFiltered":   "(filtrando de _MAX_ total registros)",
-                            "infoPostFix":    "",
-                            "thousands":      ",",
-                            "lengthMenu":     "Mostrando _MENU_ registros",
-                            "loadingRecords": "Cargando...",
-                            "processing":     "Procesando...",
-                            "search":         "Buscando:",
-                            "zeroRecords":    "No existen registro que coincida con la busqueda",
-                            "paginate": {
-                                "first":      "Primero",
-                                "last":       "Ultimo",
-                                "next":       "Siguiente",
-                                "previous":   "Anterior"
-                            },
-                            "aria": {
-                                "sortAscending":  ": activate to sort column ascending",
-                                "sortDescending": ": activate to sort column descending"
-                            }
-                        },
-              // Disable sorting on the no-sort class
-              "aoColumnDefs" : [ {
-                "bSortable" : false,
-                "aTargets" : [ "no-sort" ]
-              } ]                        
-            });
-          });            
-        </script>
-       <?php }
-    }else{ echo 'No hay datos.'; } 
-}
+//MODIFICA HEADER PARA QUE SEA EL ARCHIVO DE SALIDA TIPO JSON
+header('Content-Type: application/json');
+//INVOCACION EN INSTANCIACION DE LA CLASE DE MODULO
+require_once($_SERVER['DOCUMENT_ROOT'].'/class/se/clsSe_Modulo.php');
+$ose_modulo = new Se_Modulo();
+$ose_modulo -> __set("idmodulo", $busqueda);
+$ose_modulo -> __set("nombre", $busqueda);
+$reg = $ose_modulo->getAllPagineo($pagnum, $pagsize); 
+
+//VALIDA QUE TRAIGA REGISTROS 
+if (is_array($reg) && (count($reg) > 0) ) {
+   $totalregistros = $reg[0][13];//ID DE COLUMNA RETORNADA DE LA BASE QUE CONTIENE EL NUMERO TOTAL DE REGISTROS
+   $registrosfiltrados = $reg[0][13];
+   }
+
+    $object = (object) ['draw' => $draw, 
+						'recordsTotal' => $totalregistros,
+						'recordsFiltered' => $registrosfiltrados ,
+						'data' => $reg 
+						];
+
+
+$resultado = json_encode($object);
+
+echo $resultado;
 ?>
-
-
-
-
-
-

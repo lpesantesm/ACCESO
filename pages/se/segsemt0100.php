@@ -1,8 +1,11 @@
+ <?php 
+ $pagsize = 10;
+ ?>
  <!-- DataTables -->
- <link rel="stylesheet" href="../../plugins/datatables/dataTables.bootstrap.css"><!-- ../../plugins/datatables/dataTables.bootstrap.css-->        
+ <link rel="stylesheet" href="../plugins/datatables/dataTables.bootstrap.css"><!-- ../../plugins/datatables/dataTables.bootstrap.css-->        
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <h1> Modulos <small>Aqu&iacute; puede consultar todos los Modulos, filtrandolos por: C&oacute;digo</small> </h1>
+    <h1> MODULOS DEL SISTEMA <small>AQUI PUEDE CONSULTAR TODOS LOS MODULOS, BUSCANDO POR: CODIGO / NOMBRE.</small> </h1>
     <!--              <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                 <li><a href="#">Tables</a></li>
@@ -12,46 +15,35 @@
   <!-- Main content -->
   <section class="content">
     <!-- Horizontal Form -->
-    <div class="box box-info">
-      <!--                  <div class="box-header with-border">
-                    <h3 class="box-title">Horizontal Form</h3>
-                  </div>-->
-      <br/>
-      <!-- /.box-header -->
-      <!-- form start -->
-      <form id="frmC" name="frmC" method="post" action="" class="form-horizontal">
-        <input type="hidden" name="hid_frmEstado" id="hid_frmEstado" value="" />
-        <div class="box-body">
-          <div class="form-group">
-            <label for="inputEmail3" class="col-sm-2 control-label">C&oacute;digo</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="txt_idmodulo" name="txt_idmodulo" placeholder="C&oacute;digo">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">Descripci&oacute;n</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="txt_descripcion" name="txt_descripcion" placeholder="Descripci&oacute;n">
-            </div>
-          </div>
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer" align="center">
-          <button type="button" id="btn_search" name="btn_search" class="btn btn-info" onclick="btn_EnviarOnClick();">Consultar</button>
-          <button type="button" id="btn_new" name="btn_new" class="btn btn-success">Agregar</button>
-        </div>
-        <!-- /.box-footer -->
-      </form>
-    </div>
     <!-- /.box -->
     <div class="row">
       <div class="col-xs-12">
-        <div class="box">
+        <div class="box box-warning">
           <!--                    <div class="box-header">
                       <h3 class="box-title">Hover Data Table</h3>
                     </div>-->
           <!-- /.box-header -->
-          <div id="div_resultado" class="box-body">
+          <div class="box-body table-responsive">
+          
+          <table id="tbl_data" class="table table-bordered table-striped table-hover" >
+              <thead>
+              <tr>
+                <th class="no-sort">CODIGO</th>
+                <th class="no-sort">NOMBRE</th>
+                <th class="no-sort">MODULO PADRE</th>
+                <th class="no-sort">ACCION</th>
+              </tr>
+              </thead>
+
+              <tfoot>
+                <tr>
+                <th>CODIGO</th>
+                <th>NOMBRE</th>
+                <th>MODULO PADRE</th>
+          <th></th>
+        </tr>
+        </tfoot>
+      </table> 
             <!--                      <table id="tbl_data" class="table table-bordered table-hover">
                         <thead>
                         <tr>
@@ -90,53 +82,52 @@
         <!-- DataTables -->
         <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
         <script src="../plugins/datatables/dataTables.bootstrap.min.js"></script>
-        <script type="text/javascript" src="../js/formToCallPost.js"></script>           
+        <script type="text/javascript" src="../js/formToCallPost.js"></script>
         <!-- page script -->
         <script>
-//          $(function () {
-//            $('#tbl_data').DataTable({
-//              "paging": true,
-//              "lengthChange": false,
-//              "searching": false,
-//              "ordering": true,
-//              "info": true,
-//              "autoWidth": false,
-//              "language": {
-//                            "decimal":        "",
-//                            "emptyTable":     "No data available in table",
-//                            "info":           "Mostrando _START_ a _END_ de _TOTAL_ registros",
-//                            "infoEmpty":      "Mostrando 0 a 0 de 0 registros",
-//                            "infoFiltered":   "(filtrando de _MAX_ total registros)",
-//                            "infoPostFix":    "",
-//                            "thousands":      ",",
-//                            "lengthMenu":     "Mostrando _MENU_ registros",
-//                            "loadingRecords": "Cargando...",
-//                            "processing":     "Procesando...",
-//                            "search":         "Buscando:",
-//                            "zeroRecords":    "No existen registro que coincida con la busqueda",
-//                            "paginate": {
-//                                "first":      "Primero",
-//                                "last":       "Ultimo",
-//                                "next":       "Siguiente",
-//                                "previous":   "Anterior"
-//                            },
-//                            "aria": {
-//                                "sortAscending":  ": activate to sort column ascending",
-//                                "sortDescending": ": activate to sort column descending"
-//                            }
-//                        },
-//              // Disable sorting on the no-sort class
-//              "aoColumnDefs" : [ {
-//                "bSortable" : false,
-//                "aTargets" : [ "no-sort" ]
-//              } ]                        
-//            });
-//          });
-          
-        function btn_EnviarOnClick(){
-            var f = document.frmC;
-            if (f.btn_search.disabled == true) { return false;}
-            f.hid_frmEstado.value = '1';
-            eval(formToCallPost(f,'./se/segsemt0100-p.php','div_resultado',''));        
-        } //--          
+		
+          $(function () {
+            $('#tbl_data').DataTable({
+              		 "lengthChange": false,
+        "processing": true,
+        "serverSide": true,
+		"searching": true,
+		"pageLength": <?php echo $pagsize; ?>,
+        "ajax": {
+					"url": "se/segsemt0100-p.php",
+					"data": {
+						"pagsize": <?php echo $pagsize; ?>
+					}
+				},
+              "language": {
+                            "decimal":        "",
+                            "emptyTable":     "NO HAY DATOS DISPONIBLES EN LA TABLA",
+                            "info":           "MOSTRANDO DEL _START_ AL _END_ DE _TOTAL_ REGISTROS",
+                            "infoEmpty":      "MOSTRANDO DEL  0 AL 0 DE 0 REGISTROS",
+                            "infoFiltered":   "(FILTRANDO DE _MAX_ TOTAL REGISTROS)",
+                            "infoPostFix":    "",
+                            "thousands":      ",",
+                            "lengthMenu":     "MOSTRANDO _MENU_ REGISTROS",
+                            "loadingRecords": "CARGANDO...",
+                            "processing":     "PROCESANDO...",
+                            "search":         "BUSCAR:",
+                            "zeroRecords":    "NO EXISTEN REGISTROS QUE COINCIDAN CON LA BUSQUEDA",
+                            "paginate": {
+                                "first":      "PRIMERO",
+                                "last":       "ULTIMO",
+                                "next":       "SIGUIENTE",
+                                "previous":   "ANTERIOR"
+                            },
+                            "aria": {
+                                "sortAscending":  ": activate to sort column ascending",
+                                "sortDescending": ": activate to sort column descending"
+                            }
+                        },
+              // Disable sorting on the no-sort class
+              "aoColumnDefs" : [ {
+                "bSortable" : false,
+                "aTargets" : [ "no-sort" ]
+              } ]                        
+            });
+          });         
         </script> 
