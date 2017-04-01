@@ -32,11 +32,12 @@ $ose_modulo -> __set("idmodulo", $busqueda);
 $ose_modulo -> __set("nombre", $busqueda);
 $reg = $ose_modulo->getAllPagineo($pagnum, $pagsize); 
 
+//print_r($reg);
 //VALIDA QUE TRAIGA REGISTROS 
-if (is_array($reg) && (count($reg) > 0) ) {
-   $totalregistros = $reg[0][13];//ID DE COLUMNA RETORNADA DE LA BASE QUE CONTIENE EL NUMERO TOTAL DE REGISTROS
-   $registrosfiltrados = $reg[0][13];
-   }
+ if (is_array($reg) && (count($reg) > 0) ) {
+   $totalregistros = $reg[0]['rowtotal'];//ID DE COLUMNA RETORNADA DE LA BASE QUE CONTIENE EL NUMERO TOTAL DE REGISTROS
+   $registrosfiltrados = $reg[0]['rowtotal'];
+   } 
 
     $object = (object) ['draw' => $draw, 
 						'recordsTotal' => $totalregistros,
