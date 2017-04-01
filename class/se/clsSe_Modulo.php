@@ -65,7 +65,7 @@ class Se_Modulo extends Dbmgr {
         $par .= (is_null($pagsize) || $pagsize == '' ? ", null" : sprintf(", %s", $pagsize));        
 	    $sql = sprintf("SELECT * from se_pq_modulo_fgetbrowserpag(%s)",$par);
         $this->QrySelect($sql);
-        $reg = $this->Result('a', PGSQL_NUM);
+        $reg = $this->Result('a');
         return $reg;        
    } // end getAllPagineo()  	
 
