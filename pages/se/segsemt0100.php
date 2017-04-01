@@ -23,9 +23,9 @@
             <div class="box box-default">
                 <div class="form-group">
                     <center>
-                        <label for="btn_new">¿Desea crear un nuevo modulo para el sistema?</label>
+                        <label for="btn_new">¿DESEA CREAR UN NUEVO MODULO PARA EL SISTEMA?</label>
   <!--                      <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">-->
-                        <button id="btn_new" name="btn_new" type="button" class="btn btn-success" onclick="javascript:{window.location='./principal.php?pg=segsemt0101.php';}">Crear</button>                                                  
+                        <button id="btn_new" name="btn_new" type="button" class="btn btn-success" onclick="javascript:{window.location='./principal.php?pg=segsemt0101.php';}">CREAR</button>                                                  
                     </center>  
                 </div>                    
             </div>                
