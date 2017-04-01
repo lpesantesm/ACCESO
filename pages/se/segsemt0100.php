@@ -18,32 +18,47 @@
     <!-- /.box -->
     <div class="row">
       <div class="col-xs-12">
+        <!-- form start -->
+        <form role="form" method="post" action="">
+            <div class="box box-default">
+                <div class="form-group">
+                    <center>
+                        <label for="btn_new">¿Desea crear un nuevo modulo para el sistema?</label>
+  <!--                      <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">-->
+                        <button id="btn_new" name="btn_new" type="button" class="btn btn-success" onclick="javascript:{window.location='./principal.php?pg=segsemt0101.php';}">Crear</button>                                                  
+                    </center>  
+                </div>                    
+            </div>                
+        </form>
+        <!-- / form start -->
+      </div>        
+
+        <div class="col-xs-12">
         <div class="box box-warning">
           <!--                    <div class="box-header">
                       <h3 class="box-title">Hover Data Table</h3>
                     </div>-->
           <!-- /.box-header -->
           <div class="box-body table-responsive">
-          
-          <table id="tbl_data" class="table table-bordered table-striped table-hover" >
-              <thead>
-              <tr>
-                <th class="no-sort">CODIGO</th>
-                <th class="no-sort">NOMBRE</th>
-                <th class="no-sort">MODULO PADRE</th>
-                <th class="no-sort">ACCION</th>
-              </tr>
-              </thead>
+            <table id="tbl_data" class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th class="no-sort">CODIGO</th>
+                        <th class="no-sort">NOMBRE</th>
+                        <th class="no-sort">MODULO PADRE</th>
+                        <th class="no-sort">ACCION</th>
+                    </tr>
+                </thead>
 
-              <tfoot>
-                <tr>
-                <th>CODIGO</th>
-                <th>NOMBRE</th>
-                <th>MODULO PADRE</th>
-          <th></th>
-        </tr>
-        </tfoot>
-      </table> 
+                <tfoot>
+                    <tr>
+                        <th>CODIGO</th>
+                        <th>NOMBRE</th>
+                        <th>MODULO PADRE</th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table> 
             <!--                      <table id="tbl_data" class="table table-bordered table-hover">
                         <thead>
                         <tr>
@@ -88,46 +103,46 @@
 		
           $(function () {
             $('#tbl_data').DataTable({
-              		 "lengthChange": false,
-        "processing": true,
-        "serverSide": true,
+                "lengthChange": false,
+                "processing": true,
+                "serverSide": true,
 		"searching": true,
 		"pageLength": <?php echo $pagsize; ?>,
-        "ajax": {
-					"url": "se/segsemt0100-p.php",
-					"data": {
-						"pagsize": <?php echo $pagsize; ?>
-					}
-				},
-              "language": {
-                            "decimal":        "",
-                            "emptyTable":     "NO HAY DATOS DISPONIBLES EN LA TABLA",
-                            "info":           "MOSTRANDO DEL _START_ AL _END_ DE _TOTAL_ REGISTROS",
-                            "infoEmpty":      "MOSTRANDO DEL  0 AL 0 DE 0 REGISTROS",
-                            "infoFiltered":   "(FILTRANDO DE _MAX_ TOTAL REGISTROS)",
-                            "infoPostFix":    "",
-                            "thousands":      ",",
-                            "lengthMenu":     "MOSTRANDO _MENU_ REGISTROS",
-                            "loadingRecords": "CARGANDO...",
-                            "processing":     "PROCESANDO...",
-                            "search":         "BUSCAR:",
-                            "zeroRecords":    "NO EXISTEN REGISTROS QUE COINCIDAN CON LA BUSQUEDA",
-                            "paginate": {
-                                "first":      "PRIMERO",
-                                "last":       "ULTIMO",
-                                "next":       "SIGUIENTE",
-                                "previous":   "ANTERIOR"
-                            },
-                            "aria": {
-                                "sortAscending":  ": activate to sort column ascending",
-                                "sortDescending": ": activate to sort column descending"
+                "ajax": {
+                            "url": "se/segsemt0100-p.php",
+                            "data": {
+                                    "pagsize": <?php echo $pagsize; ?>
                             }
-                        },
-              // Disable sorting on the no-sort class
-              "aoColumnDefs" : [ {
-                "bSortable" : false,
-                "aTargets" : [ "no-sort" ]
-              } ]                        
+			},
+                "language": {
+                              "decimal":        "",
+                              "emptyTable":     "NO HAY DATOS DISPONIBLES EN LA TABLA",
+                              "info":           "MOSTRANDO DEL _START_ AL _END_ DE _TOTAL_ REGISTROS",
+                              "infoEmpty":      "MOSTRANDO DEL  0 AL 0 DE 0 REGISTROS",
+                              "infoFiltered":   "(FILTRANDO DE _MAX_ TOTAL REGISTROS)",
+                              "infoPostFix":    "",
+                              "thousands":      ",",
+                              "lengthMenu":     "MOSTRANDO _MENU_ REGISTROS",
+                              "loadingRecords": "CARGANDO...",
+                              "processing":     "PROCESANDO...",
+                              "search":         "BUSCAR:",
+                              "zeroRecords":    "NO EXISTEN REGISTROS QUE COINCIDAN CON LA BUSQUEDA",
+                              "paginate": {
+                                  "first":      "PRIMERO",
+                                  "last":       "ULTIMO",
+                                  "next":       "SIGUIENTE",
+                                  "previous":   "ANTERIOR"
+                              },
+                              "aria": {
+                                  "sortAscending":  ": activate to sort column ascending",
+                                  "sortDescending": ": activate to sort column descending"
+                              }
+                          },
+                // Disable sorting on the no-sort class
+                "aoColumnDefs" : [ {
+                    "bSortable" : false,
+                    "aTargets" : [ "no-sort" ]
+                } ]                        
             });
           });         
         </script> 
