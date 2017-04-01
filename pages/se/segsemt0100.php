@@ -48,7 +48,7 @@ ul,ol,li{margin:0;padding:0}table{border-collapse:collapse;border-spacing:0}ol,u
                     <center>
                         <label for="btn_new">¿DESEA CREAR UN NUEVO MODULO PARA EL SISTEMA?</label>
   <!--                      <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">-->
-                        <button id="btn_new" name="btn_new" type="button" class="btn btn-success" onclick="javascript:{window.location='./principal.php?pg=segsemt0101.php';}">CREAR</button>                                                  
+                        <button id="btn_new" name="btn_new" type="button" class="btn btn-success" onclick="javascript:{window.location='./principal.php?pg=segsemt0101.php?id=0$NEW';}">CREAR</button>                                                  
                     </center>  
                 </div>                    
             </div>                
