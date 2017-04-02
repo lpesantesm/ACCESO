@@ -2,9 +2,11 @@
 
 // <editor-fold defaultstate="collapsed" desc="V A R I A B L E S">
  $pagsize = 10;
+ $primeravez = true;
  $msgError = '';
  $subtitulo = '';
  $frmProceso = null;
+ $frmEstado = null; 
  $idmodulo = null;
  $nombre = null;
  $descripcion = null;
@@ -12,6 +14,7 @@
  $siglas = null;
  $orden = null;
  $idmodulopadre = null;
+ $nombrepadre = null;
  $icono = null;
 // </editor-fold>
 
@@ -20,7 +23,7 @@
  //UPD MODIFICAR
  //CON CONSULTAR
  //DEL ELMINAR
-if (isset($_GET['id'])) {
+if (isset($_GET['id'])){
     list($idmodulo,$frmProceso) = explode('$', $_GET['id']);    
     unset($_GET['id']);
 }
@@ -38,7 +41,30 @@ if(isset($frmProceso)){
         $msgError = 'OPCI&Oacute;N DEL FORMULARIO NO V&Aacute;LIDA.';
     }    
 } 
+
+ if (isset($_POST['hid_frmEstado'])){
+    $primeravez = false;
+ }   
 // </editor-fold> 
+
+// <editor-fold defaultstate="collapsed" desc="PROCEDIMIENTO">
+if($primeravez && !is_null($idmodulo) && !empty($idmodulo)  && $idmodulo > 0){
+//CONSULTO EL REGISTRO
+    //INVOCA CLASE DE MODULO
+    require_once($_SERVER['DOCUMENT_ROOT'].'/class/se/clsSe_Modulo.php');    
+    $ose_modulo = new Se_Modulo();
+    $ose_modulo -> __set("idmodulo", $idmodulo);
+    $registro = $ose_modulo->get();
+    print_r($registro);
+    
+    // obtiene todos los campos del registro
+    foreach ($registro as $regi => $valor){
+        echo $asignacion = "\$" . $regi . "='" . $valor . "';";
+        eval($asignacion);
+    } // for    
+}  
+// </editor-fold> 
+
 
 ?>
 <!DOCTYPE html>
@@ -63,6 +89,7 @@ if(isset($frmProceso)){
                 <div class="box box-warning">
                     <!-- .form-horizontal -->        
                     <form class="form-horizontal" action="#" method="post" onSubmit="#">
+                      <input type="hidden" name="hid_frmEstado" id="hid_frmEstado" value="<?php echo $frmEstado; ?>" />                        
                       <div class="box-body">
                         <div class="form-group">
                             <label for="txt_idmodulo" class="col-sm-2 control-label">C&Oacute;DIGO: </label>
@@ -73,7 +100,7 @@ if(isset($frmProceso)){
                         <div class="form-group">
                             <label for="txt_nombre" class="col-sm-2 control-label">NOMBRE: </label>
                           <div class="col-sm-10">
-                              <input type="text" class="form-control" id="txt_nombre" name="txt_nombre" placeholder="NOMBRE DEL MODULO" required="true" maxlength="100" pattern="[A-Z]{4,100}" title="SOLO DEBE CONTENER LETRAS, DEBE TENER COMO M&Iacute;NIMO 4 CARACTERES." value="<?php echo $nombre; ?>">
+                              <input type="text" class="form-control" id="txt_nombre" name="txt_nombre" placeholder="NOMBRE DEL MODULO" required="true" maxlength="100" pattern="[A-Z]{5,100}" title="SOLO DEBE CONTENER LETRAS, DEBE TENER COMO M&Iacute;NIMO 5 CARACTERES." value="<?php echo $nombre; ?>">
                           </div>
                         </div>
                         <div class="form-group">
@@ -85,7 +112,7 @@ if(isset($frmProceso)){
                         <div class="form-group">
                             <label for="txt_directorio" class="col-sm-2 control-label">DIRECTORIO: </label>
                           <div class="col-sm-10">
-                              <input type="text" class="form-control" id="txt_directorio" name="txt_directorio" placeholder="DIRECTORIO DONDE SE ENCUENTRAN LAS PAGINAS DEL MODULO" required="true" maxlength="4" pattern="[A-Z]" title="SOLO DEBE CONTENER LETRAS" value="<?php echo $directorio; ?>">
+                              <input type="text" class="form-control" id="txt_directorio" name="txt_directorio" placeholder="NOMBRE DEL DIRECTORIO DONDE SE ALOJARAN LAS PAGINAS DEL MODULO" required="true" maxlength="4" pattern="[A-Z]" title="SOLO DEBE CONTENER LETRAS" value="<?php echo $directorio; ?>">
                           </div>
                         </div>     
                         <div class="form-group">
@@ -101,17 +128,16 @@ if(isset($frmProceso)){
                           </div>
                         </div>     
                         <div class="form-group">
-                            <label for="txt_idmodulopadre" class="col-sm-2 control-label">MODULO PADRE: </label>
+                            <label for="txt_nombrepadre" class="col-sm-2 control-label">MODULO PADRE: </label>
                           <div class="col-sm-10">
-                              <input type="text" class="form-control" id="txt_idmodulopadre" name="txt_idmodulopadre" placeholder="ORDEN EN QUE DEBERA APARECE EL MODULO EN LA PANTALLA DE SELECCION DE MODULO" required="true" maxlength="2" pattern="[0-9]" title="SOLO DEBE CONTENER N&Uacute;MEROS" value="<?php echo $idmodulopadre; ?>">
+                              <input type="hidden" name="hid_idmodulopadre" id="hid_idmodulopadre" value="<?php echo $idmodulopadre; ?>" />
+                              <input type="text" class="form-control" id="txt_nombrepadre" name="txt_nombrepadre" placeholder="MODULO PADRE" title="" value="<?php echo $nombrepadre; ?>">                                                        
                           </div>
                         </div>                               
-                          
-
                         <div class="form-group">
                             <label for="txt_icono" class="col-sm-2 control-label">ICONO: </label>
                           <div class="col-sm-10">
-                              <input type="text" class="form-control" id="txt_icono" name="txt_icono" placeholder="ORDEN EN QUE DEBERA APARECE EL MODULO EN LA PANTALLA DE SELECCION DE MODULO" required="true" maxlength="2" pattern="[0-9]" title="SOLO DEBE CONTENER N&Uacute;MEROS" value="<?php echo $idmodulopadre; ?>">
+                              <input type="text" class="form-control" id="txt_icono" name="txt_icono" placeholder="ICONO QUE LLEVARA EL MODULO O SUBMODULO EN LA APLICACION (NOMBRE)" required="true" maxlength="2" pattern="[0-9]" title="SOLO DEBE CONTENER LETRAS" value="<?php echo $icono; ?>">
                           </div>
                         </div>                                                         
                       </div>
@@ -129,7 +155,7 @@ if(isset($frmProceso)){
                                     //$msgError = 'OPCI&Oacute;N DEL FORMULARIO NO V&Aacute;LIDA.';
                                 }    
                             ?>                              
-                                <button type="submit" class="btn btn-default">VOLVER</button>
+                                <button type="button" class="btn btn-default" onclick="javascript: { window.location ='principal.php?pg=segsemt0100.php'; }" >VOLVER</button>
                           </center>
                       </div>
                       <!-- /.box-footer -->
