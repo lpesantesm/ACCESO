@@ -76,14 +76,17 @@ class Se_Modulo extends Dbmgr {
         $reg = $this-> Result('a');
         return $reg;
     } //validaUsuario()
-   /* public function get($idusuario) {
-        $sql = sprintf("select SE_PQ_Usuario.f_get('%s') AS MFRC from dual ", $idusuario);
-        $this->setSql($sql);
-        $reg = $this->selectOne();
-        return $reg;
+
+    public function get(){
+        $par = (is_null($this->idmodulo) || $this->idmodulo == '' ? "null" : sprintf("%d", $this->idmodulo));
+	$sql = sprintf("SELECT * from se_pq_modulo_fgetfull(%s)", $par);
+        $this->QrySelect($sql);
+        $reg = $this->Result('a');
+        return $reg;                
+
     } // end get()
 
-	public function getAllPagineo($idusuario, $descripcion, $estado, $idusuariored, $pageNum, $pageSize, &$regTotal, $allempleado = 'N'){
+/*	public function getAllPagineo($idusuario, $descripcion, $estado, $idusuariored, $pageNum, $pageSize, &$regTotal, $allempleado = 'N'){
             $par =  (is_null($idusuario) || $idusuario == '' ? "null" : sprintf("'%s'", $idusuario));
             $par .= (is_null($descripcion) || $descripcion == '' ? ", null" : sprintf(", '%s'", $descripcion));                
             $par .= (is_null($estado) || $estado == '' ? ", null" : sprintf(", '%s'", $estado));                                        
