@@ -55,7 +55,7 @@ if($primeravez && !is_null($idmodulo) && !empty($idmodulo)  && $idmodulo > 0){
     $ose_modulo = new Se_Modulo();
     $ose_modulo -> __set("idmodulo", $idmodulo);
     $registro = $ose_modulo->get();
-    print_r($registro);
+    //print_r($registro);
     
     // obtiene todos los campos del registro
     foreach ($registro as $regi => $valor){
