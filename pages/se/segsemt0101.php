@@ -122,7 +122,7 @@ if(isset($frmProceso)){
                                 if ($frmProceso == 'NEW'){?>
                                 <button type="submit" class="btn btn-success">GRABAR</button>
                               <?php } elseif ($frmProceso == 'UPD'){?>
-                                <button type="submit" class="btn btn-success">MODIFICAR</button>
+                                <button type="submit" class="btn btn-warning">MODIFICAR</button>
                               <?php } elseif ($frmProceso == 'DEL'){ ?>
                                 <button type="submit" class="btn btn-danger">ELIMINAR</button>
                               <?php } else {
