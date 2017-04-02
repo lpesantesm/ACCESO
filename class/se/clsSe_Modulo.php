@@ -81,9 +81,8 @@ class Se_Modulo extends Dbmgr {
         $par = (is_null($this->idmodulo) || $this->idmodulo == '' ? "null" : sprintf("%d", $this->idmodulo));
 	$sql = sprintf("SELECT * from se_pq_modulo_fgetfull(%s)", $par);
         $this->QrySelect($sql);
-        $reg = $this->Result('a');
+        $reg = $this->Result('f');
         return $reg;                
-
     } // end get()
 
 /*	public function getAllPagineo($idusuario, $descripcion, $estado, $idusuariored, $pageNum, $pageSize, &$regTotal, $allempleado = 'N'){
