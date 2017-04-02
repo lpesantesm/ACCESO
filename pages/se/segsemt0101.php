@@ -59,7 +59,7 @@ if($primeravez && !is_null($idmodulo) && !empty($idmodulo)  && $idmodulo > 0){
     
     // obtiene todos los campos del registro
     foreach ($registro as $regi => $valor){
-        echo $asignacion = "\$" . $regi . "='" . $valor . "';";
+        /*echo*/ $asignacion = "\$" . $regi . "='" . $valor . "';";
         eval($asignacion);
     } // for    
 }  
