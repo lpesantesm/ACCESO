@@ -18,7 +18,7 @@
  $icono = null;
 // </editor-fold>
 
-// <editor-fold defaultstate="collapsed" desc="RECIBE PARAMETROS DESDE EL RESUMEN">
+// <editor-fold defaultstate="collapsed" desc="R E C I B E  P A R A M E T R O S  D E S D E  E L  R E S U M E N">
  //NEW NUEVO
  //UPD MODIFICAR
  //CON CONSULTAR
@@ -47,7 +47,7 @@ if(isset($frmProceso)){
  }   
 // </editor-fold> 
 
-// <editor-fold defaultstate="collapsed" desc="PROCEDIMIENTO">
+// <editor-fold defaultstate="collapsed" desc="P R O C E D I M I E N T O">
 if($primeravez && !is_null($idmodulo) && !empty($idmodulo)  && $idmodulo > 0){
 //CONSULTO EL REGISTRO
     //INVOCA CLASE DE MODULO
@@ -62,6 +62,58 @@ if($primeravez && !is_null($idmodulo) && !empty($idmodulo)  && $idmodulo > 0){
         /*echo*/ $asignacion = "\$" . $regi . "='" . $valor . "';";
         eval($asignacion);
     } // for    
+
+    if($frmEstado > 0){
+        // <editor-fold defaultstate="collapsed" desc="V A L I D A C I O N E S">
+        require_once('../../lib/validaciones.php');
+        $msgError = '';
+        if ($msgError == '') { validaTexto($idmodulo,  false ,  false ,  true ,  "" ,  false ,  1, 4, "C&Oacute;DIGO",  $msgError);}
+        if ($msgError == '') { validaTexto($nombre, true, true, true, " ", true, 5, 100, "NOMBRE", $msgError); }
+        if ($msgError == '') { validaTexto($descripcion, true, true, true, " ", true, 0, 100, "DESCRIPCI&Oacute;N", $msgError); }       
+        if ($msgError == '') { validaTexto($directorio, true, true, true, "/", false, 0, 100, "DIRECTORIO", $msgError); }       
+        if ($msgError == '') { validaTexto($siglas, true, true, true, "", true, 0, 100, "SIGLAS", $msgError); }
+        if ($msgError == '') { validaTexto($orden,  false ,  false ,  true ,  "" ,  false ,  1, 2, "ORDEN",  $msgError);}       
+        if ($msgError == '') { validaTexto($idmodulopadre,  false ,  false ,  true ,  "" ,  false ,  0, 4, "MODULO PADRE",  $msgError);}              
+        if ($msgError == '') { validaTexto($icono, true, true, true, "", true, 2, 100, "ICONO", $msgError); }              
+
+        if ($msgError == ''){
+           require_once("../../class/se/clsSe_Modulo.php");
+           $ose_modulo = new Se_Modulo();
+           $ose_modulo->__set('idmodulo', $idmodulo);
+           $ose_modulo->__set('nombre', $nombre);
+           $ose_modulo->__set('descripcion', $descripcion);
+           $ose_modulo->__set('directorio', $directorio);           
+           $ose_modulo->__set('siglas', $siglas);          
+           $ose_modulo->__set('orden', $orden);           
+           $ose_modulo->__set('idmodulopadre', $idmodulopadre);          
+           $ose_modulo->__set('icono', $icono);
+           $ose_modulo->__set('idusuariolog', $_SESSION["idusuario"]);
+           $ose_modulo->__set('ip', $_SERVER['REMOTE_ADDR']);
+        } // ($msgError == "")             
+        // </editor-fold>     
+        
+        // <editor-fold defaultstate="collapsed" desc="O P E R A C I O N E S">
+        if ($frmEstado == 1){
+            $resultado = $ose_modulo->insert(); 
+        } elseif ($frmEstado == 2){
+            $resultado = $ose_modulo->update(); 
+        } elseif ($frmEstado == 3){
+            $resultado = $ose_modulo->delete(); 
+        } else{
+            $msgError = 'OPCI&Oacute;N DEL FORMULARIO NO V&Aacute;LIDA.';
+        }            
+        
+        if ($msgError == ''){
+            if (is_array($resultado)){
+                if($resultado['on_errcode'] != -20000){
+                    echo '';
+                }else{
+                    echo '';
+                }
+            }
+        }
+        // </editor-fold>
+    }
 }  
 // </editor-fold> 
 
@@ -100,7 +152,7 @@ if($primeravez && !is_null($idmodulo) && !empty($idmodulo)  && $idmodulo > 0){
                         <div class="form-group">
                             <label for="txt_nombre" class="col-sm-2 control-label">NOMBRE: </label>
                           <div class="col-sm-10">
-                              <input type="text" class="form-control" id="txt_nombre" name="txt_nombre" placeholder="NOMBRE DEL MODULO" required="true" maxlength="100" pattern="[A-Z]{5,100}" title="SOLO DEBE CONTENER LETRAS, DEBE TENER COMO M&Iacute;NIMO 5 CARACTERES." value="<?php echo $nombre; ?>">
+                              <input type="text" class="form-control" id="txt_nombre" name="txt_nombre" placeholder="NOMBRE DEL MODULO" required="true" maxlength="100" pattern="[a-zA-Z][a-zA-Z ]{5,100}" title="SOLO DEBE CONTENER LETRAS, DEBE TENER COMO M&Iacute;NIMO 5 CARACTERES." value="<?php echo $nombre; ?>">
                           </div>
                         </div>
                         <div class="form-group">
