@@ -239,7 +239,7 @@ if($primeravez && !is_null($idmodulo) && !empty($idmodulo)  && $idmodulo > 0){
                var f = document.frm;
                if (f.btn_enviar.disabled == true) { return false;}
                f.hid_frmEstado.value = a;
-               eval(formToCallPost(f,'segsemt0101.php','div_resultado',''));
+               eval(formToCallPost(f,'se/segsemt0101.php','div_resultado',''));
              } //--
          </script>        
     </body>
