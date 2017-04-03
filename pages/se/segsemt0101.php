@@ -71,71 +71,72 @@ if($primeravez && !is_null($idmodulo) && !empty($idmodulo)  && $idmodulo > 0){
         /*echo*/ $asignacion = "\$" . $regi . "='" . $valor . "';";
         eval($asignacion);
     } // for    
-
-    if($frmEstado > 0){
-        echo '$frmEstado > 0';
-        // <editor-fold defaultstate="collapsed" desc="V A L I D A C I O N E S">
-        require_once('../../lib/validaciones.php');
-        $msgError = '';
-        if ($msgError == '') { validaTexto($idmodulo,  false ,  false ,  true ,  "" ,  false ,  1, 4, "C&Oacute;DIGO",  $msgError);}
-        if ($msgError == '') { validaTexto($nombre, true, true, true, " ", true, 5, 100, "NOMBRE", $msgError); }
-        if ($msgError == '') { validaTexto($descripcion, true, true, true, " ", true, 0, 100, "DESCRIPCI&Oacute;N", $msgError); }       
-        if ($msgError == '') { validaTexto($directorio, true, true, true, "/", false, 0, 100, "DIRECTORIO", $msgError); }       
-        if ($msgError == '') { validaTexto($siglas, true, true, true, "", true, 0, 100, "SIGLAS", $msgError); }
-        if ($msgError == '') { validaTexto($orden,  false ,  false ,  true ,  "" ,  false ,  1, 2, "ORDEN",  $msgError);}       
-        if ($msgError == '') { validaTexto($idmodulopadre,  false ,  false ,  true ,  "" ,  false ,  0, 4, "MODULO PADRE",  $msgError);}              
-        if ($msgError == '') { validaTexto($icono, true, true, true, "", true, 2, 100, "ICONO", $msgError); }              
-
-        if ($msgError == ''){
-           require_once("../../class/se/clsSe_Modulo.php");
-           $ose_modulo = new Se_Modulo();
-           $ose_modulo->__set('idmodulo', $idmodulo);
-           $ose_modulo->__set('nombre', $nombre);
-           $ose_modulo->__set('descripcion', $descripcion);
-           $ose_modulo->__set('directorio', $directorio);           
-           $ose_modulo->__set('siglas', $siglas);          
-           $ose_modulo->__set('orden', $orden);           
-           $ose_modulo->__set('idmodulopadre', $idmodulopadre);          
-           $ose_modulo->__set('icono', $icono);
-           $ose_modulo->__set('idusuariolog', $_SESSION["idusuario"]);
-           $ose_modulo->__set('ip', $_SERVER['REMOTE_ADDR']);
-        } else{ echo '$msgError != '; ?>
-            <div class="alert alert-warning" role="alert"><?php echo $msgError; ?></div>
-        <?php return; } 
-        // ($msgError == "")             
-        // </editor-fold>     
-        
-        // <editor-fold defaultstate="collapsed" desc="O P E R A C I O N E S">
-        if ($frmEstado == 1){
-            $resultado = $ose_modulo->insert(); 
-        } elseif ($frmEstado == 2){
-            $resultado = $ose_modulo->update(); 
-        } elseif ($frmEstado == 3){
-            $resultado = $ose_modulo->delete(); 
-        } else{
-            $msgError = 'OPCI&Oacute;N DEL FORMULARIO NO V&Aacute;LIDA.';
-        }            
-        
-        if ($msgError == ''){
-            if (is_array($resultado)){
-                if($resultado['on_errcode'] != -20000){?>
-                    <div class="alert alert-danger" role="alert"><?php echo $resultado['ov_errmsg']; ?></div>
-                <?php return; }else{ ?>
-                    <div class="alert alert-success" role="alert">
-                    <?php if($frmEstado == 1){
-                            echo 'MODULO INGRESADO CON EXITO. SU C&Oacute;DIGO ES: ' . $resultado['on_errcode'];
-                          }elseif ($frmEstado == 2){
-                            echo 'INFORMACION DEL MODULO HA SIDO ACTUALIZADA CON EXITO.';                              
-                          }else{
-                              echo 'MODULO ELEMINADO CON EXITO.';
-                          }?>
-                    </div>
-          <?php return; }
-            }
-        }
-        // </editor-fold>
-    }
 }  
+
+if($frmEstado > 0){
+    echo '$frmEstado > 0';
+    // <editor-fold defaultstate="collapsed" desc="V A L I D A C I O N E S">
+    require_once('../../lib/validaciones.php');
+    $msgError = '';
+    if ($msgError == '') { validaTexto($idmodulo,  false ,  false ,  true ,  "" ,  false ,  1, 4, "C&Oacute;DIGO",  $msgError);}
+    if ($msgError == '') { validaTexto($nombre, true, true, true, " ", true, 5, 100, "NOMBRE", $msgError); }
+    if ($msgError == '') { validaTexto($descripcion, true, true, true, " ", true, 0, 100, "DESCRIPCI&Oacute;N", $msgError); }       
+    if ($msgError == '') { validaTexto($directorio, true, true, true, "/", false, 0, 100, "DIRECTORIO", $msgError); }       
+    if ($msgError == '') { validaTexto($siglas, true, true, true, "", true, 0, 100, "SIGLAS", $msgError); }
+    if ($msgError == '') { validaTexto($orden,  false ,  false ,  true ,  "" ,  false ,  1, 2, "ORDEN",  $msgError);}       
+    if ($msgError == '') { validaTexto($idmodulopadre,  false ,  false ,  true ,  "" ,  false ,  0, 4, "MODULO PADRE",  $msgError);}              
+    if ($msgError == '') { validaTexto($icono, true, true, true, "", true, 2, 100, "ICONO", $msgError); }              
+
+    if ($msgError == ''){
+       require_once("../../class/se/clsSe_Modulo.php");
+       $ose_modulo = new Se_Modulo();
+       $ose_modulo->__set('idmodulo', $idmodulo);
+       $ose_modulo->__set('nombre', $nombre);
+       $ose_modulo->__set('descripcion', $descripcion);
+       $ose_modulo->__set('directorio', $directorio);           
+       $ose_modulo->__set('siglas', $siglas);          
+       $ose_modulo->__set('orden', $orden);           
+       $ose_modulo->__set('idmodulopadre', $idmodulopadre);          
+       $ose_modulo->__set('icono', $icono);
+       $ose_modulo->__set('idusuariolog', $_SESSION["idusuario"]);
+       $ose_modulo->__set('ip', $_SERVER['REMOTE_ADDR']);
+    } else{ echo '$msgError != '; ?>
+        <div class="alert alert-warning" role="alert"><?php echo $msgError; ?></div>
+    <?php return; } 
+    // ($msgError == "")             
+    // </editor-fold>     
+
+    // <editor-fold defaultstate="collapsed" desc="O P E R A C I O N E S">
+    if ($frmEstado == 1){
+        $resultado = $ose_modulo->insert(); 
+    } elseif ($frmEstado == 2){
+        $resultado = $ose_modulo->update(); 
+    } elseif ($frmEstado == 3){
+        $resultado = $ose_modulo->delete(); 
+    } else{
+        $msgError = 'OPCI&Oacute;N DEL FORMULARIO NO V&Aacute;LIDA.';
+    }            
+
+    if ($msgError == ''){
+        if (is_array($resultado)){
+            if($resultado['on_errcode'] != -20000){?>
+                <div class="alert alert-danger" role="alert"><?php echo $resultado['ov_errmsg']; ?></div>
+            <?php return; }else{ ?>
+                <div class="alert alert-success" role="alert">
+                <?php if($frmEstado == 1){
+                        echo 'MODULO INGRESADO CON EXITO. SU C&Oacute;DIGO ES: ' . $resultado['on_errcode'];
+                      }elseif ($frmEstado == 2){
+                        echo 'INFORMACION DEL MODULO HA SIDO ACTUALIZADA CON EXITO.';                              
+                      }else{
+                          echo 'MODULO ELEMINADO CON EXITO.';
+                      }?>
+                </div>
+      <?php return; }
+        }
+    }
+    // </editor-fold>
+    }
+
 // </editor-fold> 
 
 ?>
