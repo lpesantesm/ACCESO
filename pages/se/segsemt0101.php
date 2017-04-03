@@ -98,7 +98,7 @@ if($primeravez && !is_null($idmodulo) && !empty($idmodulo)  && $idmodulo > 0){
            $ose_modulo->__set('icono', $icono);
            $ose_modulo->__set('idusuariolog', $_SESSION["idusuario"]);
            $ose_modulo->__set('ip', $_SERVER['REMOTE_ADDR']);
-        } else {?>
+        } else{ ?>
             <div class="alert alert-warning" role="alert"><?php echo $msgError; ?></div>
         <?php return; } 
         // ($msgError == "")             
