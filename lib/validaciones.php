@@ -16,7 +16,7 @@
 'Retorna:
 '        True -> error
 '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-function validaTexto(&$cadena, $fMayusculas, $fMinusculas, $fNumeros, $CarEspeciales, $fPrimerCaracter, $Minimo, $Maximo, $nombrecampo, &$msgError) {
+function validaTexto(&$cadena, $fMayusculas, $fMinusculas, $fNumeros, $CarEspeciales, $fPrimerCaracter, $Minimo, $Maximo, $nombrecampo, &$msgError){
     
     $fError = false;
 	$msgError = "";
