@@ -6,15 +6,17 @@ require_once strtolower($_SERVER["DOCUMENT_ROOT"]).'/class/classDbmgr.php';
 class Se_Modulo extends Dbmgr {
 
     // ATRIBUTOS
-    private $idmodulo = '';
-    private $nombre = 0;
+    private $idmodulo = 0;
+    private $nombre = '';
     private $descripcion = '';
     private $directorio = '';
     private $siglas = '';
-    private $orden = '';
-    private $idmodulopadr = '';
-    private $ip = '';
-    private $fecharegistro = null;	
+    private $orden = 0;
+    private $icono = '';
+    private $idmodulopadre = null;
+    private $fecharegistro = null;
+    private $idusuariolog = '';
+    private $ip = '';    
 
 
     public function __construct()
@@ -84,8 +86,55 @@ class Se_Modulo extends Dbmgr {
         $reg = $this->Result('f');
         return $reg;                
     } // end get()
+    
+    private function _atr2parametros($isUpdate){
+        $par = '';
+        if ($isUpdate){ $par .= ((is_null($this->idmodulo) || $this->idmodulo == 0) ? 'null' : sprintf('%d', $this->idmodulo));}         
+        $par .= sprintf(", '%s'", strtoupper($this->nombre));
+        if (is_null($this->descripcion) || $this->descripcion == ''){$par .= ", null";} else {$par .= sprintf(", '%s'", $this->descripcion);}
+        if (is_null($this->directorio) || $this->directorio == ''){$par .= ", null";} else {$par .= sprintf(", '%s'", $this->directorio);}        
+        if (is_null($this->siglas) || $this->siglas == ''){$par .= ", null";} else {$par .= sprintf(", '%s'", $this->siglas);}                
+        if (is_null($this->orden) || $this->orden == 0){$par .= ", null";} else {$par .= sprintf(", %d", $this->orden);}                        
+        if (is_null($this->icono) || $this->icono == ''){$par .= ", null";} else {$par .= sprintf(", '%s'", $this->icono);}                        
+        if (is_null($this->idmodulopadre) || $this->idmodulopadre == 0){$par .= ", null";} else {$par .= sprintf(", %d", $this->idmodulopadre);}                        
+        if (substr($par,0,1) == ',') { $par = substr($par,1); }        
+        return $par;
+    } // end _atr2parametros()    
 
-/*	public function getAllPagineo($idusuario, $descripcion, $estado, $idusuariored, $pageNum, $pageSize, &$regTotal, $allempleado = 'N'){
+    public function insert(){
+        $par = $this->_atr2parametros(false);
+        $par .= sprintf(", '%s'", '1');  
+        $par .= sprintf(", '%s'", $this->idusuariolog);  
+        $par .= sprintf(", '%s'", $this->ip);          
+        $sql = sprintf("SELECT * from se_pq_modulo_pinsert(%s)", $par);
+	$this-> QrySelect($sql);
+        $reg = $this-> Result('f');
+        return $reg;        
+    } // end insert()
+
+    public function update(){
+        $par = $this->_atr2parametros(true);
+        $par .= sprintf(", '%s'", '1');  
+        $par .= sprintf(", '%s'", $this->idusuariolog);  
+        $par .= sprintf(", '%s'", $this->ip);          
+        $sql = sprintf("SELECT * from se_pq_modulo_pupdate(%s)", $par);
+	$this-> QrySelect($sql);
+        $reg = $this-> Result('f');
+        return $reg;        
+    } // end update()
+    
+    public function delete(){
+        $par = ((is_null($this->idmodulo) || $this->idmodulo == 0) ? 'null' : sprintf('%d', $this->idmodulo));
+        $par .= sprintf(", '%s'", '1');  
+        $par .= sprintf(", '%s'", $this->idusuariolog);  
+        $par .= sprintf(", '%s'", $this->ip);                  
+        $sql = sprintf("SELECT * from se_pq_modulo_pdelete(%s)", $par);
+	$this-> QrySelect($sql);
+        $reg = $this-> Result('f');
+        return $reg;
+    } // end delete()    
+
+    /*	public function getAllPagineo($idusuario, $descripcion, $estado, $idusuariored, $pageNum, $pageSize, &$regTotal, $allempleado = 'N'){
             $par =  (is_null($idusuario) || $idusuario == '' ? "null" : sprintf("'%s'", $idusuario));
             $par .= (is_null($descripcion) || $descripcion == '' ? ", null" : sprintf(", '%s'", $descripcion));                
             $par .= (is_null($estado) || $estado == '' ? ", null" : sprintf(", '%s'", $estado));                                        
@@ -120,44 +169,6 @@ class Se_Modulo extends Dbmgr {
         $listaItems = $this->_getList($Idusuario, $Estado);
         return $this->matriz2lista($listaItems);
     } // end getListArray()
-
-    public function delete() {
-        $sql = sprintf("begin SE_PQ_Usuario.p_delete('%s', '%s', '%s', true, :errcode, :errdesc); end;",$this->idusuario, $this->idusuario_log, $this->ip);
-        $this->setSql($sql);
-        $reg = $this->mantenimiento();
-        return $reg;
-    } // end delete()
-
-    public function insert() {
-        $par = $this->_atr2parametros();
-        $sql = sprintf("begin SE_PQ_Usuario.p_insert(%s, true, :errcode, :errdesc); end;", $par);
-        $this->setSql($sql);
-        $reg = $this->mantenimiento();
-        return $reg;
-    } // end insert()
-
-    public function update() {
-        $par = $this->_atr2parametros();
-        $sql = sprintf("begin SE_PQ_Usuario.p_update(%s, true, :errcode, :errdesc); end;", $par);
-        $this->setSql($sql);
-        $reg = $this->mantenimiento();
-        return $reg;
-    } // end update()
-
-    private function _atr2parametros() {
-        $sql = sprintf("'%s'", strtoupper($this->idusuario));
-        $sql .= sprintf(", %d", $this->idpersona);
-        $sql .= sprintf(", '%s'", $this->descripcion);
-        $sql .= sprintf(", '%s'", $this->clave);
-        $sql .= sprintf(", '%s'", $this->estado);
-        $sql .= sprintf(", '%s'", $this->idusuario_log);
-        $sql .= sprintf(", '%s'", $this->ip);
-        if (is_null($this->pcimpresora)){$sql .= ", null";} else {$sql .= sprintf(",  '%s'", $this->pcimpresora);}
-        if (is_null($this->nombreimpresora)){$sql .= ", null";} else {$sql .= sprintf(",  '%s'", $this->nombreimpresora);}
-        if (is_null($this->servidor)){$sql .= ", null";} else{$sql .= sprintf(",  '%s'", $this->servidor);}
-        if (is_null($this->puerto)){$sql .= ", null";} else{$sql .= sprintf(",  '%s'", $this->puerto);}
-        return $sql;
-    } // end _atr2parametros()
 
     public function get_modulos($idusuario, $idsistema) {
         $par = sprintf("'%s', %d", $idusuario, $idsistema);
