@@ -119,7 +119,7 @@ if($frmEstado > 0){
 
     if ($msgError == ''){
         if (is_array($resultado)){
-            if($resultado['on_errcode'] != -20000){?>
+            if($resultado['on_errcode'] == -20000){?>
                 <div class="alert alert-danger" role="alert"><?php echo $resultado['ov_errmsg']; ?></div>
             <?php return; }else{ ?>
                 <div class="alert alert-success" role="alert">
