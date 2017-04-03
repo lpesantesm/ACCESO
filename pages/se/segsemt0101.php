@@ -73,6 +73,7 @@ if($primeravez && !is_null($idmodulo) && !empty($idmodulo)  && $idmodulo > 0){
     } // for    
 
     if($frmEstado > 0){
+        echo '$frmEstado > 0';
         // <editor-fold defaultstate="collapsed" desc="V A L I D A C I O N E S">
         require_once('../../lib/validaciones.php');
         $msgError = '';
@@ -98,7 +99,7 @@ if($primeravez && !is_null($idmodulo) && !empty($idmodulo)  && $idmodulo > 0){
            $ose_modulo->__set('icono', $icono);
            $ose_modulo->__set('idusuariolog', $_SESSION["idusuario"]);
            $ose_modulo->__set('ip', $_SERVER['REMOTE_ADDR']);
-        } else{ ?>
+        } else{ echo '$msgError != '''; ?>
             <div class="alert alert-warning" role="alert"><?php echo $msgError; ?></div>
         <?php return; } 
         // ($msgError == "")             
