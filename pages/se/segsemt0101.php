@@ -34,8 +34,8 @@ if (isset($_GET['id'])){
     $primeravez = false;
     foreach ($_POST as $nombre_campo => $valor){
       if (substr($nombre_campo, 3, 1) == '_'){   // campos simples
-        echo $asignacion = "\$" . substr($nombre_campo, 4) . "='" . $valor . "';";
-        echo '</br>';
+        /*echo*/ $asignacion = "\$" . substr($nombre_campo, 4) . "='" . $valor . "';";
+        //echo '</br>';
         eval($asignacion);
       }
     }    
@@ -74,7 +74,7 @@ if($primeravez && !is_null($idmodulo) && !empty($idmodulo)  && $idmodulo > 0){
 }  
 
 if($frmEstado > 0){
-    echo '$frmEstado > 0';
+    //echo '$frmEstado > 0';
     // <editor-fold defaultstate="collapsed" desc="V A L I D A C I O N E S">
     require_once('../../lib/validaciones.php');
     $msgError = '';
@@ -135,8 +135,7 @@ if($frmEstado > 0){
         }
     }
     // </editor-fold>
-    }
-
+}
 // </editor-fold> 
 
 ?>
