@@ -198,7 +198,7 @@ if($frmEstado > 0){
                         <div class="form-group">
                             <label for="txt_orden" class="col-sm-2 control-label">ORDEN: </label>
                           <div class="col-sm-10">
-                              <input type="text" class="form-control" id="txt_orden" name="txt_orden" placeholder="ORDEN EN QUE DEBERA APARECE EL MODULO EN LA PANTALLA DE SELECCION DE MODULO" required="true" maxlength="2" pattern="[0-9]" title="SOLO DEBE CONTENER N&Uacute;MEROS" value="<?php echo $orden; ?>">
+                              <input type="text" class="form-control" id="txt_orden" name="txt_orden" placeholder="ORDEN EN QUE DEBERA APARECE EL MODULO EN LA PANTALLA DE SELECCION DE MODULO" required="true" maxlength="2" pattern="[A-Za-z- .]" title="SOLO DEBE CONTENER N&Uacute;MEROS" value="<?php echo $orden; ?>">
                           </div>
                         </div>     
                         <div class="form-group">
