@@ -3,6 +3,8 @@
 // <editor-fold defaultstate="collapsed" desc="V A R I A B L E S">
  $pagsize = 10;
  $primeravez = true;
+ $tipomensaje = null;
+ $mensaje = null;
  $msgError = '';
  $subtitulo = '';
  $frmProceso = null;
@@ -89,7 +91,10 @@ if($primeravez && !is_null($idmodulo) && !empty($idmodulo)  && $idmodulo > 0){
            $ose_modulo->__set('icono', $icono);
            $ose_modulo->__set('idusuariolog', $_SESSION["idusuario"]);
            $ose_modulo->__set('ip', $_SERVER['REMOTE_ADDR']);
-        } // ($msgError == "")             
+        } else {?>
+            <div class="alert alert-warning" role="alert"><?php echo $msgError; ?></div>
+        <?php return; } 
+        // ($msgError == "")             
         // </editor-fold>     
         
         // <editor-fold defaultstate="collapsed" desc="O P E R A C I O N E S">
@@ -105,18 +110,25 @@ if($primeravez && !is_null($idmodulo) && !empty($idmodulo)  && $idmodulo > 0){
         
         if ($msgError == ''){
             if (is_array($resultado)){
-                if($resultado['on_errcode'] != -20000){
-                    echo '';
-                }else{
-                    echo '';
-                }
+                if($resultado['on_errcode'] != -20000){?>
+                    <div class="alert alert-danger" role="alert"><?php echo $resultado['ov_errmsg']; ?></div>
+                <?php return; }else{ ?>
+                    <div class="alert alert-success" role="alert">
+                    <?php if($frmEstado == 1){
+                            echo 'MODULO INGRESADO CON EXITO. SU C&Oacute;DIGO ES: ' . $resultado['on_errcode'];
+                          }elseif ($frmEstado == 2){
+                            echo 'INFORMACION DEL MODULO HA SIDO ACTUALIZADA CON EXITO.';                              
+                          }else{
+                              echo 'MODULO ELEMINADO CON EXITO.';
+                          }?>
+                    </div>
+          <?php return; }
             }
         }
         // </editor-fold>
     }
 }  
 // </editor-fold> 
-
 
 ?>
 <!DOCTYPE html>
@@ -140,7 +152,8 @@ if($primeravez && !is_null($idmodulo) && !empty($idmodulo)  && $idmodulo > 0){
                 <!-- .box -->
                 <div class="box box-warning">
                     <!-- .form-horizontal -->        
-                    <form class="form-horizontal" action="#" method="post" onSubmit="#">
+<!--                    <form class="form-horizontal" action="#" method="post" onSubmit="#">-->
+                    <form class="form-horizontal" id="frm" name="frm" method="post" action="">
                       <input type="hidden" name="hid_frmEstado" id="hid_frmEstado" value="<?php echo $frmEstado; ?>" />                        
                       <div class="box-body">
                         <div class="form-group">
@@ -164,13 +177,13 @@ if($primeravez && !is_null($idmodulo) && !empty($idmodulo)  && $idmodulo > 0){
                         <div class="form-group">
                             <label for="txt_directorio" class="col-sm-2 control-label">DIRECTORIO: </label>
                           <div class="col-sm-10">
-                              <input type="text" class="form-control" id="txt_directorio" name="txt_directorio" placeholder="NOMBRE DEL DIRECTORIO DONDE SE ALOJARAN LAS PAGINAS DEL MODULO" required="true" maxlength="4" pattern="[A-Z]" title="SOLO DEBE CONTENER LETRAS" value="<?php echo $directorio; ?>">
+                              <input type="text" class="form-control" id="txt_directorio" name="txt_directorio" placeholder="NOMBRE DEL DIRECTORIO DONDE SE ALOJARAN LAS PAGINAS DEL MODULO" required="true" maxlength="4" pattern="[a-zA-Z]" title="SOLO DEBE CONTENER LETRAS" value="<?php echo $directorio; ?>">
                           </div>
                         </div>     
                         <div class="form-group">
                             <label for="txt_siglas" class="col-sm-2 control-label">SIGLAS: </label>
                           <div class="col-sm-10">
-                              <input type="text" class="form-control" id="txt_siglas" name="txt_siglas" placeholder="SIGLAS PARA EL MODULO" required="true" maxlength="6" pattern="[A-Z]" title="SOLO DEBE CONTENER LETRAS" value="<?php echo $siglas; ?>">
+                              <input type="text" class="form-control" id="txt_siglas" name="txt_siglas" placeholder="SIGLAS PARA EL MODULO" required="true" maxlength="6" pattern="[a-zA-Z]" title="SOLO DEBE CONTENER LETRAS" value="<?php echo $siglas; ?>">
                           </div>
                         </div>    
                         <div class="form-group">
@@ -198,11 +211,11 @@ if($primeravez && !is_null($idmodulo) && !empty($idmodulo)  && $idmodulo > 0){
                           <center>
                             <?php
                                 if ($frmProceso == 'NEW'){?>
-                                <button type="submit" class="btn btn-success">GRABAR</button>
+                                <button type="button" class="btn btn-success" id="btn_enviar" name="btn_enviar" onclick="btn_EnviarOnClick(1);">GRABAR</button>
                               <?php } elseif ($frmProceso == 'UPD'){?>
-                                <button type="submit" class="btn btn-warning">MODIFICAR</button>
+                                <button type="button" class="btn btn-warning" id="btn_enviar" name="btn_enviar" onclick="btn_EnviarOnClick(2);">MODIFICAR</button>
                               <?php } elseif ($frmProceso == 'DEL'){ ?>
-                                <button type="submit" class="btn btn-danger">ELIMINAR</button>
+                                <button type="button" class="btn btn-danger" id="btn_enviar" name="btn_enviar" onclick="btn_EnviarOnClick(3);">ELIMINAR</button>
                               <?php } else {
                                     //$msgError = 'OPCI&Oacute;N DEL FORMULARIO NO V&Aacute;LIDA.';
                                 }    
@@ -213,11 +226,21 @@ if($primeravez && !is_null($idmodulo) && !empty($idmodulo)  && $idmodulo > 0){
                       <!-- /.box-footer -->
                     </form>                    
                     <!-- / .form-horizontal -->                            
-                </div>            
+                </div> 
+                <div id="div_resultado"></div>
                 <!-- / .box -->            
             </section>            
         </div>
         <!-- / ROW -->                
         <!-- / Main content -->
+        <script type="text/javascript" src="../../js/formToCallPost.js"></script>   
+         <script language="javascript">
+             function btn_EnviarOnClick(a){
+               var f = document.frm;
+               if (f.btn_enviar.disabled == true) { return false;}
+               f.hid_frmEstado.value = a;
+               eval(formToCallPost(f,'segsemt0101.php','div_resultado',''));
+             } //--
+         </script>        
     </body>
 </html>
