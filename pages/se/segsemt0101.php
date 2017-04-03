@@ -30,6 +30,17 @@ if (isset($_GET['id'])){
     unset($_GET['id']);
 }
 
+ if (isset($_POST['hid_frmEstado'])){
+    $primeravez = false;
+    foreach ($_POST as $nombre_campo => $valor){
+      if (substr($nombre_campo, 3, 1) == '_'){   // campos simples
+        echo $asignacion = "\$" . substr($nombre_campo, 4) . "='" . $valor . "';";
+        echo '</br>';
+        eval($asignacion);
+      }
+    }    
+ }
+
 if(isset($frmProceso)){
     if ($frmProceso == 'NEW'){
          $subtitulo = 'AQUI PUEDE CREAR UN NUEVO MODULO PARA EL SISTEMA.'; 
@@ -43,17 +54,6 @@ if(isset($frmProceso)){
         $msgError = 'OPCI&Oacute;N DEL FORMULARIO NO V&Aacute;LIDA.';
     }    
 } 
-
- if (isset($_POST['hid_frmEstado'])){
-    $primeravez = false;
-    foreach ($_POST as $nombre_campo => $valor){
-      if (substr($nombre_campo, 3, 1) == '_'){   // campos simples
-        /*echo*/ $asignacion = "\$" . substr($nombre_campo, 4) . "='" . $valor . "';";
-        //echo '</br>';
-        eval($asignacion);
-      }
-    }    
- }   
 // </editor-fold> 
 
 // <editor-fold defaultstate="collapsed" desc="P R O C E D I M I E N T O">
@@ -162,6 +162,7 @@ if($primeravez && !is_null($idmodulo) && !empty($idmodulo)  && $idmodulo > 0){
 <!--                    <form class="form-horizontal" action="#" method="post" onSubmit="#">-->
                     <form class="form-horizontal" id="frm" name="frm" method="post" action="" data-parsley-validate>
                       <input type="hidden" name="hid_frmEstado" id="hid_frmEstado" value="<?php echo $frmEstado; ?>" />                        
+                      <input type="hidden" name="hid_frmProceso" id="hid_frmProceso" value="<?php echo $frmProceso; ?>" />                                              
                       <div class="box-body">
                         <div class="form-group">
                             <label for="txt_idmodulo" class="col-sm-2 control-label">C&Oacute;DIGO: </label>
