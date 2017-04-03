@@ -46,6 +46,13 @@ if(isset($frmProceso)){
 
  if (isset($_POST['hid_frmEstado'])){
     $primeravez = false;
+    foreach ($_POST as $nombre_campo => $valor){
+      if (substr($nombre_campo, 3, 1) == '_'){   // campos simples
+        /*echo*/ $asignacion = "\$" . substr($nombre_campo, 4) . "='" . $valor . "';";
+        //echo '</br>';
+        eval($asignacion);
+      }
+    }    
  }   
 // </editor-fold> 
 
@@ -153,7 +160,7 @@ if($primeravez && !is_null($idmodulo) && !empty($idmodulo)  && $idmodulo > 0){
                 <div class="box box-warning">
                     <!-- .form-horizontal -->        
 <!--                    <form class="form-horizontal" action="#" method="post" onSubmit="#">-->
-                    <form class="form-horizontal" id="frm" name="frm" method="post" action="">
+                    <form class="form-horizontal" id="frm" name="frm" method="post" action="" data-parsley-validate>
                       <input type="hidden" name="hid_frmEstado" id="hid_frmEstado" value="<?php echo $frmEstado; ?>" />                        
                       <div class="box-body">
                         <div class="form-group">
