@@ -1,6 +1,6 @@
 	  <?php 
 	  @session_start();
-          print_r($_SESSION["menuusuario"]);
+          //print_r($_SESSION["menuusuario"]);
 	  print('<!-- sidebar menu: : style can be found in sidebar.less -->
 	      <ul class="sidebar-menu">
 		<li class="header">MENU PRINCIPAL</li>');  
