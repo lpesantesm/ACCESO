@@ -50,18 +50,14 @@ class Se_Transaccion extends Dbmgr {
     }
 
    // METODOS
-    public function validaTransaccionusuario($idusuario) {
+    public function consultaMenuusuario($idusuario) {
         $par = sprintf("'%s'", strtoupper($idusuario));
-        //if (is_null($this->clave)){$par .= ", null";} else {$par .= sprintf(",  '%s'", md5($this->clave));}
-        //$par .= sprintf(", '%s'", $this->ip);
-        $par .= sprintf(", %d", $this->idtransaccion);
-        //$sql = sprintf("begin SE_PQ_Session.p_Inicia_Sesion(%s, true, :errcode, :errdesc); end;",$par);
-		//$sql = sprintf("SELECT * from se_pq_usuario_fconsultamodulos(%s)",$par);
-                $sql = sprintf("SELECT * from se_pq_usuario_fconsultatransacciones(%s)",$par);
-		$this-> QrySelect($sql);
+        $par .= sprintf(", '%s'", $this->idmodulo);
+        /*echo*/ $sql = sprintf("SELECT * from se_pq_usuario_fconsultatransacciones(%s)",$par);
+        $this-> QrySelect($sql);
         $reg = $this-> Result('a');
         return $reg;
-    } //validaUsuario()
+    } //consultaMenuusuario()
 
     public function getAllPagineo( $pagnum, $pagsize){
         $par =  (is_null($this->idtransaccion) || $this->idtransaccion == '' || !is_numeric( $this->idtransaccion ) ? "null" : sprintf("%d", $this->idtransaccion));
